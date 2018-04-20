@@ -42,25 +42,39 @@ namespace WpfApplication1
         //arrays
         private short [] backround;
         //model
-        private Model model;
+        private Model model=null;
         private double KINECT_HEIGHT = 1.75;
         private int KINECT_ANGLE = 0;
         private static string SETTING_FILE_PATH = "setting";
-        SerialPort port;
+        static SerialPort port;
+        static bool validPort = false;
 
         public MainWindow()
         {
             InitializeComponent();
             Screen.Height = 700;
             Screen.Width = 900;
-            port = new SerialPort("COM4", 9600, Parity.None, 8, StopBits.One);
-            port.DataReceived += serialPortDataReceived;
-            port.Open();
+            Thread t = new Thread(() => init_port());
+            t.Start();
         }
 
         private void serialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            Dispatcher.Invoke(() => lbl_status.Content = ((SerialPort)sender).ReadExisting());
+            string msg = ((SerialPort)sender).ReadLine();
+            //Dispatcher.Invoke(() => lbl_status.Content = msg);
+
+            if (msg.Equals("init"))
+            {
+                validPort = true;
+                if (model != null)
+                {
+                    Dispatcher.Invoke(() => lbl_status.Content = "model not null, connected");
+                    ((KinectAngleHandler)model.getAngleHandler()).setSerialPort(port);
+                }
+                else
+
+                    Dispatcher.Invoke(() => lbl_status.Content = "model is null");
+            }
         }
 
         void DataWindow_Closing(object sender, CancelEventArgs e)
@@ -101,46 +115,49 @@ namespace WpfApplication1
             }
         }
 
-  
-
-        public void clearBackround()
+        private void init_port()
         {
-            if (backround != null)
+            validPort = false;
+            int length = 0;
+            while(!validPort)
             {
-                for (int i = 0; i < backround.Length; i++)
-                    backround[i] = 0;
+                string[] portsNames = SerialPort.GetPortNames();
+                if (portsNames.Length != length)
+                {
+                    length = portsNames.Length;
+                    Thread.Sleep(2000);
+                }
+                
+                foreach(string name in portsNames)
+                {
+                    port = new SerialPort(name, 9600, Parity.None, 8, StopBits.One);
+                    try
+                    {
+                        if (!port.IsOpen)
+                            port.Open();
+                        port.WriteLine("init");
+                        port.DataReceived += serialPortDataReceived;
+                        Thread.Sleep(1000);
+                    }
+                    catch
+                    {
+                        if (port.IsOpen)
+                            port.Close();
+                        port.Dispose();
+                        port = null;
+                    }
+                    if (validPort)
+                        break;
+                }
             }
         }
 
-        private void sensitivityChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void angleChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (model != null)
             {
                 model.changeVerticalAngleTo((int)e.NewValue);
             }
-        }
-
-        private void backround_check(object sender, RoutedEventArgs e)
-        {
-            backroundCheck = true;
-            clearBackround();
-            if (model!=null)
-                model.disableSkeletonFrame();
-        }
-
-        private void backround_unCheck(object sender, RoutedEventArgs e)
-        {
-            backroundCheck = false;
-        }
-
-        private void color_unchecked(object sender, RoutedEventArgs e)
-        {
-            oneColor = false;
-        }
-
-        private void color_checked(object sender, RoutedEventArgs e)
-        {
-            oneColor = true;
         }
 
         private void down_click(object sender, RoutedEventArgs e)
@@ -158,7 +175,6 @@ namespace WpfApplication1
                 model.changeVerticalAngleBy(5);
             }
         }
-
 
         private void tracking_checked(object sender, RoutedEventArgs e)
         {

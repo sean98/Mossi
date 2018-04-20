@@ -156,6 +156,15 @@ namespace WpfApplication1
                 throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
                     "use: setAngleHandler(IKinectAngleMovement angleHandler)");
         }
+
+        public void scan()
+        {
+            if (angleHandler != null)
+                angleHandler.scan();
+            else
+                throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
+                    "use: setAngleHandler(IKinectAngleMovement angleHandler)");
+        }
         #endregion
 
         #region Getters
@@ -186,29 +195,29 @@ namespace WpfApplication1
             this.KINECT_ANGLE = KINECT_ANGLE;
         }
         #endregion
-    }
 
-    interface IKinectFrameHandler
-    {
-        void skeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e);
+        public interface IKinectFrameHandler
+        {
+            void skeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e);
 
-        void depthFrameReady(object sender, DepthImageFrameReadyEventArgs e);
-    }
+            void depthFrameReady(object sender, DepthImageFrameReadyEventArgs e);
+        }
 
-    interface IKinectAngleHandler
-    {
-        void changeVerticalAngleBy(int angle);
+        public interface IKinectAngleHandler
+        {
+            void changeVerticalAngleBy(int angle);
 
-        void changeVerticalAngleTo(int angle);
+            void changeVerticalAngleTo(int angle);
 
-        int getVerticalAngle();
+            int getVerticalAngle();
 
-        void changeHorizontalAngleBy(int angle);
+            void changeHorizontalAngleBy(int angle);
 
-        void changeHorizontalAngleTo(int angle);
+            void changeHorizontalAngleTo(int angle);
 
-        int getHorizontalAngle();
+            int getHorizontalAngle();
 
-        void scan();
+            void scan();
+        }
     }
 }
