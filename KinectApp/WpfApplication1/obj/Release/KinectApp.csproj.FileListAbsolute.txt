@@ -17,13 +17,10 @@ C:\Users\sean9\Documents\Visual Studio 2013\Projects\KinectApp\WpfApplication1\o
 C:\Users\sean9\Documents\Visual Studio 2013\Projects\KinectApp\WpfApplication1\obj\Release\KinectApp.exe.manifest
 C:\Users\sean9\Documents\Visual Studio 2013\Projects\KinectApp\WpfApplication1\obj\Release\KinectApp.application
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Release\KinectApp.exe.config
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\KinectApp.exe
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\KinectApp.pdb
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Release\KinectApp.exe.manifest
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Release\KinectApp.application
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Release\KinectApp.exe
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Release\KinectApp.pdb
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\KinectApp.csprojResolveAssemblyReference.cache
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\MainWindow.baml
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\MainWindow.g.cs
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\App.g.cs
@@ -34,3 +31,6 @@ C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplicat
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\KinectApp.TrustInfo.xml
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\KinectApp.exe.manifest
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\KinectApp.application
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\KinectApp.exe
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\KinectApp.pdb
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Release\KinectApp.csprojResolveAssemblyReference.cache

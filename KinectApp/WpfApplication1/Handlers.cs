@@ -14,14 +14,47 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections;
 using System.IO.Ports;
 
-namespace WpfApplication1
+namespace KinectApp
 {
     class KinectFrameHandler : Model.IKinectFrameHandler
     {
         #region Variable
         Model model;
         IAlertHandler alertHandler;
+        public event EventHandler NumberOfPeopleChanged;
+        private int trackedPeople = -1;
         #endregion
+
+        public void OnNumberOfPeopleChanged(string name)
+        {
+            EventHandler handler = NumberOfPeopleChanged;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
+        }
+
+        public int TrackedPeople
+        {
+            get { return trackedPeople; }
+            private set
+            {
+                if (value != trackedPeople) ; //TODO OnNumberOfPeopleChanged
+
+                trackedPeople = value;
+                if (trackedPeople == 0)
+                {
+                    try
+                    {
+                        model.scan();
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO log ex
+                    }
+                }
+            }
+        }
 
         #region skeleton_Variable
         private int skeletonFrameCounter;
@@ -61,7 +94,7 @@ namespace WpfApplication1
             {
                 if (frame != null)
                 {
-                    const double OPTIMAL_LOCATION = 0.3, RANGE = 0.1;
+                    const double OPTIMAL_LOCATION = 0.5, RANGE = 0.1;
                     Skeleton[] skeleton = new Skeleton[frame.SkeletonArrayLength];
                     frame.CopySkeletonDataTo(skeleton);
 
@@ -69,10 +102,10 @@ namespace WpfApplication1
                     double dist = 0;
                     foreach (Skeleton s in skeleton)
                     {   //if skeleton tracked increase number of people
-                        if (s.TrackingState != SkeletonTrackingState.NotTracked)
+                        if (s.TrackingState != SkeletonTrackingState.NotTracked && s.Position.X != 0 && s.Position.Y != 0 && s.Position.Z != 0)
                             numOfTrackedPeople++;
                         //if skeleton is not fully tracked exit for loop
-                        if (s.TrackingState != SkeletonTrackingState.Tracked)
+                        if (s.TrackingState != SkeletonTrackingState.Tracked && s.Position.X != 0 && s.Position.Y != 0 && s.Position.Z != 0)
                             continue;
 
                         ArrayList alert = new ArrayList();
@@ -81,6 +114,7 @@ namespace WpfApplication1
                         JointType head = JointType.Head;
                         double headHeight = getHeight(s.Joints[JointType.Head]);
                         alert.Add(headHeight);
+                        alert.Add(Math.Round(Math.Min(getHeight(s.Joints[JointType.FootRight]), getHeight(s.Joints[JointType.FootLeft])),2));
 
                         if (headHeight > 1.3)
                             alert.Add(PositionType.standing);
@@ -134,7 +168,7 @@ namespace WpfApplication1
                         //change horizontal angle if person not in range
                         if (Math.Abs(s.Position.X) > 0.2)
                         {
-                            int angle = (int)(180 * Math.Atan(s.Position.X / s.Position.Z) / Math.PI);
+                            int angle = (int)(180 * Math.Atan(-s.Position.X / s.Position.Z) / Math.PI);
                             alert.Add("" + angle);
                             try
                             {
@@ -147,17 +181,7 @@ namespace WpfApplication1
                         }
                         alerts.Add(alert);
                     }
-                    if (numOfTrackedPeople == 0)
-                    {
-                        try
-                        { 
-                            model.scan();
-                        }
-                        catch (Exception ex)
-                        {
-                            //TODO log ex
-                        }
-                    }
+                    TrackedPeople = numOfTrackedPeople;
                     alertHandler.alert(numOfTrackedPeople, alerts);
 
                 }
@@ -187,6 +211,7 @@ namespace WpfApplication1
                     if (backround == null)
                         backround = new short[depthData.Length];
                     int count = 0;
+
                     for (int i = 0; i < depthData.Length; i++)
                     {
                         //                      depthData[i].Depth = (short)((depthData[i].Depth + depthSense / 2) * depthSense / depthSense);
@@ -329,16 +354,18 @@ namespace WpfApplication1
     {
         private int horizontalAngle=0, verticalAngle=0;
         private KinectSensor kinect;
-        private SerialPort port = null;
+        private SafeSerialPort port;
+        private float gearRelation = 2.55f;
 
         #region Constructor
-        public KinectAngleHandler(KinectSensor kinect, int horizontalAngle, int verticalAngle)
+        public KinectAngleHandler(KinectSensor kinect, SafeSerialPort port, int horizontalAngle, int verticalAngle)
         {
-            if (kinect == null)
+            if (kinect==null)
                 throw new System.ArgumentException("KinectSensor cannot be null", "kinect");
-            
             this.kinect = kinect;
-            //changeHorizontalAngleTo(horizontalAngle);
+
+            setSerialPort(port);
+            changeHorizontalAngleTo(horizontalAngle);
             changeVerticalAngleTo(verticalAngle);
         }
         #endregion
@@ -367,6 +394,7 @@ namespace WpfApplication1
 
         private static void changeVerticalAngle(KinectSensor kinect, int angle)
         {
+            
             try
             {
                 kinect.ElevationAngle = angle;
@@ -381,36 +409,53 @@ namespace WpfApplication1
         #endregion
 
         #region SerialPort
-        public void setSerialPort(SerialPort port)
+        public void setSerialPort(SafeSerialPort port)
         {
+            if (port==null)
+                throw new System.InvalidOperationException("Serial port for controlling arduino " +
+                    "cannot be null");
             this.port = port;
+            this.port.DataReceived += port_DataReceived;
+        }
+
+        private void port_DataReceived(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            int tmp;
+            if (int.TryParse(((SafeSerialPort)sender).Message, out tmp))
+                setHorizontalAngle(tmp);
         }
         #endregion
 
         #region Horizontical
+
         public void changeHorizontalAngleBy(int angle)
         {
-            if (port == null)
-                throw new System.InvalidOperationException("Serial port for controlling arduino " + 
-                    "motor is not defined");
-            //mul by 3.5 for radius propotion between motor and rotation wheel
-            angle = (angle*7)/2;
-            port.Write(Convert.ToString(angle));
+            changeHorizontalAngleTo(getHorizontalAngle() - angle);
         }
 
         public void changeHorizontalAngleTo(int angle)
         {
-            throw new NotImplementedException();
+            if (port == null)
+                throw new System.InvalidOperationException("Serial port for controlling arduino " +
+                    "motor is not defined");
+            horizontalAngle = angle;
+            port.WriteLine(Convert.ToString((int)Math.Round(horizontalAngle * gearRelation)));
+        }
+
+        public void setHorizontalAngle(int horizontalAngle)
+        {
+            this.horizontalAngle = (int)Math.Round(horizontalAngle * gearRelation);
         }
 
         public int getHorizontalAngle()
         {
-            throw new NotImplementedException();
+            return horizontalAngle;
         }
         #endregion
 
         public void scan()
         {
+            changeVerticalAngleTo(-20);
             port.WriteLine("scan");
         }
     }

@@ -12,13 +12,13 @@ using System.Threading;
 //using System.Windows.Forms;
 using System.Windows;
 
-namespace WpfApplication1
+namespace KinectApp
 {
     class Model
     {
         #region variables
         private KinectSensor kinect;
-        
+
         private double KINECT_HEIGHT;
         private int KINECT_ANGLE;
 
@@ -39,7 +39,7 @@ namespace WpfApplication1
             if (KinectSensor.KinectSensors.Count > 0)
             {
                 if (KinectSensor.KinectSensors[0] != null)
-                    return new Model(KinectSensor.KinectSensors[0],KINECT_HEIGHT,KINECT_ANGLE);
+                    return new Model(KinectSensor.KinectSensors[0], KINECT_HEIGHT, KINECT_ANGLE);
             }
             return null;
         }
@@ -73,8 +73,13 @@ namespace WpfApplication1
             kinect.Start();
         }
 
+        public void stopKinect()
+        {
+            kinect.Stop();
+        }
+
         //** skeleton options **//
-        
+
         public void enableSkeletonFrame()
         {
             if (frameHandler != null)
@@ -96,11 +101,6 @@ namespace WpfApplication1
         public void setAngleHandler(IKinectAngleHandler angleHandler)
         {
             this.angleHandler = angleHandler;
-        }
-
-        public IKinectAngleHandler getAngleHandler()
-        {
-            return angleHandler;
         }
 
         public void changeVerticalAngleBy(int angle)
@@ -125,8 +125,8 @@ namespace WpfApplication1
         {
             if (angleHandler != null)
                 return angleHandler.getVerticalAngle();
-            else
-                throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
+
+            throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
                     "use: setAngleHandler(IKinectAngleMovement angleHandler)");
         }
 
@@ -168,6 +168,17 @@ namespace WpfApplication1
         #endregion
 
         #region Getters
+
+        public IKinectAngleHandler getAngleHandler()
+        {
+            return angleHandler;
+        }
+
+        public IKinectFrameHandler getFrameHandler()
+        {
+            return frameHandler;
+        }
+
         public KinectSensor getSensor()
         {
             return kinect;

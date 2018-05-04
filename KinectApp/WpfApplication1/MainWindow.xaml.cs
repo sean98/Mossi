@@ -22,63 +22,60 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO.Ports;
+using System.Collections;
+using System.Timers;
 
-namespace WpfApplication1
+namespace KinectApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
+        #region variables
         //consts
         private const string CONNECTION = "conection: ", STATUS = "status: ";
         private const string STREAM = "Stream", PAUSE = "Pause";
         private const short BACKROUND_ACCURACY = 100;
         private const long TIME_IN_FRAMES = 1;
-        //variables
-        private bool backroundCheck = false, oneColor = false;
-        private int skeletonFrameCounter;
-        private KinectSensor kSensor;
-        //arrays
-        private short [] backround;
         //model
         private Model model=null;
         private double KINECT_HEIGHT = 1.75;
         private int KINECT_ANGLE = 0;
-        private static string SETTING_FILE_PATH = "setting";
-        static SerialPort port;
-        static bool validPort = false;
+        static SafeSerialPort port;
+        int verticalAngle = -10, horizontalAngle = 0;
+        KinectAngleHandler angleHandler;
+        System.Timers.Timer timer;
+        bool turnOffKinectFlag = false;
+        KinectFrameHandler FrameHandler;
 
+
+        static Logger logger;
+        #endregion
+       
+        #region constractor
         public MainWindow()
         {
             InitializeComponent();
+            //Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
             Screen.Height = 700;
             Screen.Width = 900;
-            Thread t = new Thread(() => init_port());
-            t.Start();
+
+            port = new SafeSerialPort();
+            port.DataReceived += port_DataReceived;
+
+            logger = new Logger();
+            logger.writeLine("Initialize Program");
+
+            timer = new System.Timers.Timer(10 * 1000);
+            timer.Elapsed += timer_Elapsed;
+            timer.AutoReset = false;
         }
+        #endregion
 
-        private void serialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            string msg = ((SerialPort)sender).ReadLine();
-            //Dispatcher.Invoke(() => lbl_status.Content = msg);
-
-            if (msg.Equals("init"))
-            {
-                validPort = true;
-                if (model != null)
-                {
-                    Dispatcher.Invoke(() => lbl_status.Content = "model not null, connected");
-                    ((KinectAngleHandler)model.getAngleHandler()).setSerialPort(port);
-                }
-                else
-
-                    Dispatcher.Invoke(() => lbl_status.Content = "model is null");
-            }
-        }
-
+        #region distractor
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
+            logger.writeLine("closing program");
+            logger.closeAndDispose();
             if (model != null)
             {
                 try
@@ -88,70 +85,95 @@ namespace WpfApplication1
                 }
                 catch { }
             }
+            Thread.Sleep(1000);
+        }
+        #endregion
+
+        void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (model != null)
+                model.stopKinect();
         }
 
+        #region Events
+        private void port_DataReceived(object sender, PropertyChangedEventArgs e)
+        {
+            string msg = ((SafeSerialPort)sender).Message;
+            Dispatcher.Invoke(() => lbl_status.Content = msg);
+
+            if (msg.Equals("ON"))
+            {
+                Dispatcher.Invoke(() => {
+                    turnOffKinectFlag = false;
+                    NumberOfPeopleChanged(this, null);
+                    turnOnKinect();
+                });
+            }
+            else if (msg.Equals("OFF"))
+                Dispatcher.Invoke(() => {
+                    turnOffKinectFlag = true;
+                    NumberOfPeopleChanged(this, null);
+                });
+        }
+
+        private void NumberOfPeopleChanged(object sender, EventArgs e)
+        {
+            if (FrameHandler != null)
+            {
+                if (turnOffKinectFlag && FrameHandler.TrackedPeople == 0)
+                {
+                    timer.Start();
+                    return;
+                }
+            }
+            timer.Close();
+        }
+        #endregion
+
+        #region KinectOffAndOn
+        private void turnOnKinect()
+        {
+            btn_stream.Content = PAUSE;
+            if (model != null)
+            {
+                model.startKinect();
+                return;
+            }
+
+            readHeight();
+            model = Model.getInstance(KINECT_HEIGHT, KINECT_ANGLE);
+            if (model != null)
+            {
+                FrameHandler = new KinectFrameHandler(Screen, model, new AlertHandler(lbl_conection));
+                FrameHandler.NumberOfPeopleChanged += NumberOfPeopleChanged;
+                model.setFrameHandler(FrameHandler);
+                model.enableDepthFrame();
+                //model.enableSkeletonFrame();
+
+                angleHandler = new KinectAngleHandler(model.getSensor(), port, horizontalAngle, verticalAngle);
+                model.setAngleHandler(angleHandler);
+
+                model.startKinect();
+            }
+        }
+       
+        private void turnOffKinect()
+        {
+            btn_stream.Content = STREAM;
+            if (model!=null)
+                model.stopKinect();
+        }
+        #endregion
+
+        #region GUI_Events
         private void stream_click(object sender, RoutedEventArgs e)
         {
-            if(btn_stream.Content.Equals(STREAM))
-            {
-                readHeight();
-                model = Model.getInstance(KINECT_HEIGHT,KINECT_ANGLE);
-                if (model != null)
-                {
-
-                    btn_stream.Content = PAUSE;
-                    model.setFrameHandler(new KinectFrameHandler(Screen, model,new AlertHandler(lbl_conection)));
-                    model.enableDepthFrame();
-                    model.startKinect();
-
-                    model.setAngleHandler(new KinectAngleHandler(model.getSensor(), 0, -10));
-                    ((KinectAngleHandler)model.getAngleHandler()).setSerialPort(port);
-                }
-            }
+            if (btn_stream.Content.Equals(STREAM))
+                turnOnKinect();
             else
-            {
-                btn_stream.Content = STREAM;
-                model = null;
-            }
+                turnOnKinect();
         }
-
-        private void init_port()
-        {
-            validPort = false;
-            int length = 0;
-            while(!validPort)
-            {
-                string[] portsNames = SerialPort.GetPortNames();
-                if (portsNames.Length != length)
-                {
-                    length = portsNames.Length;
-                    Thread.Sleep(2000);
-                }
-                
-                foreach(string name in portsNames)
-                {
-                    port = new SerialPort(name, 9600, Parity.None, 8, StopBits.One);
-                    try
-                    {
-                        if (!port.IsOpen)
-                            port.Open();
-                        port.WriteLine("init");
-                        port.DataReceived += serialPortDataReceived;
-                        Thread.Sleep(1000);
-                    }
-                    catch
-                    {
-                        if (port.IsOpen)
-                            port.Close();
-                        port.Dispose();
-                        port = null;
-                    }
-                    if (validPort)
-                        break;
-                }
-            }
-        }
-
+        
         private void angleChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (model != null)
@@ -162,7 +184,7 @@ namespace WpfApplication1
 
         private void down_click(object sender, RoutedEventArgs e)
         {
-            if (kSensor != null)
+            if (model != null)
             {
                 model.changeVerticalAngleBy(-5);
             }
@@ -170,7 +192,7 @@ namespace WpfApplication1
 
         private void up_click(object sender, RoutedEventArgs e)
         {
-            if (kSensor != null)
+            if (model != null)
             {
                 model.changeVerticalAngleBy(5);
             }
@@ -186,7 +208,7 @@ namespace WpfApplication1
 
         private void tracking_unchecked(object sender, RoutedEventArgs e)
         {
-            if (kSensor != null)
+            if (model != null)
             {
                 model.disableSkeletonFrame();
             }
@@ -197,6 +219,7 @@ namespace WpfApplication1
             while (!updateHeight())
                 MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+        #endregion
 
         #region read/update HEIGHT
         public void readHeight()
@@ -238,5 +261,6 @@ namespace WpfApplication1
             return true;
         }
         #endregion
+
     }
 }
