@@ -96,6 +96,7 @@ namespace KinectApp
         {
             Logger.writeLine("closing program");
             Logger.closeAndDispose();
+            port.closeAndDispose();
             if (model != null)
             {
                 try

@@ -101,5 +101,20 @@ namespace KinectApp
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        public void closeAndDispose()
+        {
+            if (initThread!=null)
+            {
+                validPort = true;
+                initThread.Join();
+            }
+            if (port!=null)
+            {
+                if (port.IsOpen)
+                    port.Close();
+                port.Dispose();
+            }
+        }
     }
 }
