@@ -1,11 +1,10 @@
-﻿
-
 using System;
 using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Controls;
+
 namespace KinectApp
 {
     class AlertHandler : KinectFrameHandler.IAlertHandler

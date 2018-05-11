@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Kinect;
 using System.Threading;
 
@@ -16,7 +16,7 @@ namespace KinectApp
         private int horizontalAngle = 0, verticalAngle = 0;
         private float gearRelation = 2.55f;
         #endregion
-        
+
         #region Proporties
         public int VerticalAngle
         {
@@ -31,11 +31,11 @@ namespace KinectApp
                     verticalAngle = value;
             }
         }
-        
+
         public int HorizontalAngle
         {
             get { return horizontalAngle; }
-            set 
+            set
             {
                 if (value > MAX_HORIZONTAL_ANGLE)
                     horizontalAngle = MAX_HORIZONTAL_ANGLE;
@@ -44,7 +44,6 @@ namespace KinectApp
                 else
                     horizontalAngle = value;
             }
-
         }
         #endregion
 

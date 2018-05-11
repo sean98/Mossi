@@ -81,11 +81,9 @@ namespace KinectApp
 
             port = new SafeSerialPort();
             port.DataReceived += port_DataReceived;
-
-            
-            Logger.writeLine("Initialize Program");
             
             timer = new System.Timers.Timer(timeForTurnOff * 1000);
+			
             timer.Elapsed += timer_Elapsed;
             timer.AutoReset = false;
         }

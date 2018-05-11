@@ -42,15 +42,6 @@ namespace KinectApp
                 if (writer == null)
                     newLogFile();
                 writer.Write(log);
-              /*  byte[] buffer = Encoding.ASCII.GetBytes("log"+log);
-                try
-                {
-                    socket.SendTo(buffer, endPoint);
-                }
-                catch (Exception e)
-                {
-                }
-               */
             }
         }
 
