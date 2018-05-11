@@ -103,6 +103,9 @@
     </ApplicationDefinition>
     <Compile Include="CircularArrayList.cs" />
     <Compile Include="Handlers.cs" />
+    <Compile Include="Handlers\AlertHandler.cs" />
+    <Compile Include="Handlers\AngleHandler.cs" />
+    <Compile Include="Handlers\FrameHandler.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="SafeSerialPort.cs" />
     <Page Include="MainWindow.xaml">

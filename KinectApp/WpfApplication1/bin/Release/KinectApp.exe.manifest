@@ -48,14 +48,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KinectApp.exe" size="100320">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KinectApp.exe" size="100832">
       <assemblyIdentity name="KinectApp" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>V2qWm4q2RNF0HY/p5L1Sn45+DkdBwjSObzgCrHPNl7o=</dsig:DigestValue>
+        <dsig:DigestValue>pwwTKqcTrwS4caUGwoDRX+TlDrCvpBX3zlYR0Q1+YdQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

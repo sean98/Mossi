@@ -24,6 +24,7 @@ using System.Configuration;
 using System.IO.Ports;
 using System.Collections;
 using System.Timers;
+using KinectApp.Handlers;
 
 namespace KinectApp
 {
@@ -63,7 +64,6 @@ namespace KinectApp
             port.DataReceived += port_DataReceived;
 
             logger = new Logger();
-            logger.writeLine("Initialize Program");
 
             timer = new System.Timers.Timer(10 * 1000);
             timer.Elapsed += timer_Elapsed;
@@ -74,8 +74,6 @@ namespace KinectApp
         #region distractor
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
-            logger.writeLine("closing program");
-            logger.closeAndDispose();
             if (model != null)
             {
                 try

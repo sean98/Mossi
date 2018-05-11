@@ -124,7 +124,7 @@ namespace KinectApp
         public int getVerticalAngle()
         {
             if (angleHandler != null)
-                return angleHandler.getVerticalAngle();
+                return angleHandler.VerticalAngle;
 
             throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
                     "use: setAngleHandler(IKinectAngleMovement angleHandler)");
@@ -151,7 +151,7 @@ namespace KinectApp
         public int getHorizontalAngle()
         {
             if (angleHandler != null)
-                return angleHandler.getHorizontalAngle();
+                return angleHandler.HorizontalAngle;
             else
                 throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
                     "use: setAngleHandler(IKinectAngleMovement angleHandler)");
@@ -220,13 +220,19 @@ namespace KinectApp
 
             void changeVerticalAngleTo(int angle);
 
-            int getVerticalAngle();
+            int VerticalAngle
+            {
+                get;
+            }
 
             void changeHorizontalAngleBy(int angle);
 
             void changeHorizontalAngleTo(int angle);
 
-            int getHorizontalAngle();
+            int HorizontalAngle
+            {
+                get;
+            }
 
             void scan();
         }
