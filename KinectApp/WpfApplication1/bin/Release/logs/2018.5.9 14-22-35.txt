@@ -1,0 +1,233 @@
+Initialize Program
+turn on kinect
+Angle handler constractor
+Serial port established
+change horizontal angle to 0
+to arduino angle
+0 => 90
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+scan
+change vertical angle to -20
+closing program

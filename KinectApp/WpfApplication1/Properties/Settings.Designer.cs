@@ -22,5 +22,53 @@ namespace KinectApp.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int VERTICAL_ANGLE {
+            get {
+                return ((int)(this["VERTICAL_ANGLE"]));
+            }
+            set {
+                this["VERTICAL_ANGLE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.1")]
+        public float KINECT_HEIGHT {
+            get {
+                return ((float)(this["KINECT_HEIGHT"]));
+            }
+            set {
+                this["KINECT_HEIGHT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.101")]
+        public string SERVER_IP {
+            get {
+                return ((string)(this["SERVER_IP"]));
+            }
+            set {
+                this["SERVER_IP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("11000")]
+        public int SERVER_PORT {
+            get {
+                return ((int)(this["SERVER_PORT"]));
+            }
+            set {
+                this["SERVER_PORT"] = value;
+            }
+        }
     }
 }

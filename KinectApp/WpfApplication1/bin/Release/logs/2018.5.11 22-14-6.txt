@@ -1,0 +1,3 @@
+Initialize Program
+turn on kinect
+closing program

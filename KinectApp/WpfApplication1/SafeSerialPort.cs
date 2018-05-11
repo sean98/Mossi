@@ -15,12 +15,17 @@ namespace KinectApp
         private bool validPort;
         private Thread initThread;
 
-        public string message;
+        private string message;
         public event PropertyChangedEventHandler DataReceived;
 
         public String Message
         {
             get { return message; }
+            set
+            {
+                message = value;
+                OnDataReceived("Message");
+            }
         }
 
         public SafeSerialPort()
@@ -37,12 +42,6 @@ namespace KinectApp
             catch (Exception e)
             {
                 //TODO log e
-                if (port!=null && initThread==null)
-                {
-                    if (port.IsOpen)
-                        port.Close();
-                    port.Dispose();
-                }
                 init();
             }
         }
@@ -51,24 +50,23 @@ namespace KinectApp
         {
             if (initThread != null && initThread.IsAlive)
                 return;
-
-            initThread = new Thread(() => {
-                validPort = false;
+            validPort = false;
+            initThread = new Thread(() =>
+            {
                 while (!validPort)
                 {
                     string[] portsNames = SerialPort.GetPortNames();
-                    Thread.Sleep(500);
+                    Thread.Sleep(2000);
 
                     foreach (string name in portsNames)
                     {
                         port = new SerialPort(name, 9600, Parity.None, 8, StopBits.One);
                         try
                         {
-                            if (!port.IsOpen)
-                                port.Open();
+                            port.Open();
                             port.WriteLine("init");
                             port.DataReceived += serialPortDataReceived;
-                            Thread.Sleep(500);
+                            Thread.Sleep(1000);
                         }
                         catch (Exception e)
                         {
@@ -89,11 +87,10 @@ namespace KinectApp
         private void serialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             message = ((SerialPort)sender).ReadLine();
-
             if (message.Equals("init"))
                 validPort = true;
-            else
-                OnDataReceived("Message");
+            Message = message;
+
         }
 
         protected void OnDataReceived(string name)

@@ -4,20 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Net.Sockets;
+using System.Net;
 
 namespace KinectApp
 {
-    class Logger
+    static class Logger
     {
-        private StreamWriter writer;
-        private Object locker = new Object();
-
-        public Logger()
-        {
-            newLogFile();
-        }
-
-        public void newLogFile(String path) 
+        static private StreamWriter writer;
+        static private Object locker = new Object();
+        /*
+        static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        static IPAddress serverIP = IPAddress.Parse("192.168.1.101");
+        static IPEndPoint endPoint = new IPEndPoint(serverIP, 11000);
+        */
+        public static void newLogFile(String path) 
         {
             closeAndDispose();
             lock (locker)
@@ -26,7 +27,7 @@ namespace KinectApp
             }
         }
 
-        public void newLogFile()
+        public static void newLogFile()
         {
             string dir = Directory.GetCurrentDirectory() + "\\logs";
             Directory.CreateDirectory(dir);
@@ -34,20 +35,31 @@ namespace KinectApp
                 + " " + DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" + DateTime.Now.Second + ".txt"));
         }
 
-        public void write(string log)
+        public static void write(string log)
         {
             lock (locker)
             {
+                if (writer == null)
+                    newLogFile();
                 writer.Write(log);
+              /*  byte[] buffer = Encoding.ASCII.GetBytes("log"+log);
+                try
+                {
+                    socket.SendTo(buffer, endPoint);
+                }
+                catch (Exception e)
+                {
+                }
+               */
             }
         }
 
-        public void writeLine(string log)
+        public static void writeLine(string log)
         {
             write(log + "\n");
         }
 
-        public void closeAndDispose()
+        public static void closeAndDispose()
         {
             lock (locker)
             {

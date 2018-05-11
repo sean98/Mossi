@@ -1,0 +1,40 @@
+﻿<Window x:Class="KinectApp.UpdateSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Update" Height="200" Width="250">
+    <StackPanel Margin="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Kinect Height"/>
+            <TextBox Margin="0,3,0,3" Grid.Column="1" Text="{Binding Path=KinectHeight, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Vertical Angle"/>
+            <TextBox Margin="0,3,0,3" Grid.Column="1" Text="{Binding Path=VerticalAngle, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Server IP"/>
+            <TextBox Margin="0,3,0,3" Grid.Column="1" Text="{Binding Path=ServerIP, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Server Port"/>
+            <TextBox Margin="0,3,0,3" Grid.Column="1" Text="{Binding Path=ServerPort, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+        <Button Name="Save" HorizontalAlignment="Right" Width="50" Margin="0,10,0,0" Content="save" Click="save" />
+    </StackPanel>
+</Window>

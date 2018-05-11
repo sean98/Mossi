@@ -48,14 +48,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KinectApp.exe" size="100320">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KinectApp.exe" size="104928">
       <assemblyIdentity name="KinectApp" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>V2qWm4q2RNF0HY/p5L1Sn45+DkdBwjSObzgCrHPNl7o=</dsig:DigestValue>
+        <dsig:DigestValue>Q4NsvDWW7GDCp1lOtE1SrGc6Ohy+JVA9G7m5jqgzKAI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -68,13 +68,13 @@
       <dsig:DigestValue>MvglpVKk7NSWfOAhtiI1ghVDSLHhzTSAgFEeoD5n58I=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="KinectApp.exe.config" size="1142">
+  <file name="KinectApp.exe.config" size="1195">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>z/ZVn5c41HtOUCRhob33q2HPKC3AmMkqzN/iIH2OrGc=</dsig:DigestValue>
+      <dsig:DigestValue>cof9+jjceOyCcBflHZyJq9gl8Bu3uSxWTyFZg2fOYwA=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

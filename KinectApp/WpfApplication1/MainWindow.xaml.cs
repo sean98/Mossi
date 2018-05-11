@@ -32,40 +32,60 @@ namespace KinectApp
     {
         #region variables
         //consts
-        private const string CONNECTION = "conection: ", STATUS = "status: ";
-        private const string STREAM = "Stream", PAUSE = "Pause";
-        private const short BACKROUND_ACCURACY = 100;
-        private const long TIME_IN_FRAMES = 1;
-        //model
+        private readonly string STREAM = "Stream", PAUSE = "Pause";
+        
+        //model & handlers
         private Model model=null;
-        private double KINECT_HEIGHT = 1.75;
-        private int KINECT_ANGLE = 0;
-        static SafeSerialPort port;
-        int verticalAngle = -10, horizontalAngle = 0;
-        KinectAngleHandler angleHandler;
-        System.Timers.Timer timer;
-        bool turnOffKinectFlag = false;
-        KinectFrameHandler FrameHandler;
+        private SafeSerialPort port;
+        private AlertHandler alerHandler;
+        private KinectAngleHandler angleHandler;
+        private KinectFrameHandler frameHandler;
+        
+        //variables from settings
+        private double KINECT_HEIGHT;
+        private int VERTICAL_ANGLE;
+        private string IP;
+        private int PORT;
+        
+        private System.Timers.Timer timer;
+        private int timeForTurnOff = 10;
 
+        private bool pir_detection = false;
+        public bool PIR_Detection
+        {
+            get { return pir_detection; }
+            set
+            {
+                if (pir_detection!=value)
+                {
+                    pir_detection = value;
+                    DetectionPropertyChanged(this, new PropertyChangedEventArgs("PIR_Detection"));
+                }
+            }
+        }
 
-        static Logger logger;
         #endregion
        
         #region constractor
         public MainWindow()
         {
             InitializeComponent();
-            //Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;
             Screen.Height = 700;
             Screen.Width = 900;
+
+            KINECT_HEIGHT = Properties.Settings.Default.KINECT_HEIGHT;
+            VERTICAL_ANGLE = Properties.Settings.Default.VERTICAL_ANGLE;
+            IP = Properties.Settings.Default.SERVER_IP;
+            PORT = Properties.Settings.Default.SERVER_PORT;
 
             port = new SafeSerialPort();
             port.DataReceived += port_DataReceived;
 
-            logger = new Logger();
-            logger.writeLine("Initialize Program");
-
-            timer = new System.Timers.Timer(10 * 1000);
+            
+            Logger.writeLine("Initialize Program");
+            
+            timer = new System.Timers.Timer(timeForTurnOff * 1000);
             timer.Elapsed += timer_Elapsed;
             timer.AutoReset = false;
         }
@@ -74,8 +94,8 @@ namespace KinectApp
         #region distractor
         void DataWindow_Closing(object sender, CancelEventArgs e)
         {
-            logger.writeLine("closing program");
-            logger.closeAndDispose();
+            Logger.writeLine("closing program");
+            Logger.closeAndDispose();
             if (model != null)
             {
                 try
@@ -83,17 +103,21 @@ namespace KinectApp
                     model.getSensor().ForceInfraredEmitterOff = true;
                     model = null;
                 }
-                catch { }
+                catch
+                {
+                }
             }
-            Thread.Sleep(1000);
         }
         #endregion
 
+        #region Timer
         void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            Logger.writeLine("timer_elapsed");
             if (model != null)
                 model.stopKinect();
         }
+        #endregion
 
         #region Events
         private void port_DataReceived(object sender, PropertyChangedEventArgs e)
@@ -102,55 +126,48 @@ namespace KinectApp
             Dispatcher.Invoke(() => lbl_status.Content = msg);
 
             if (msg.Equals("ON"))
-            {
-                Dispatcher.Invoke(() => {
-                    turnOffKinectFlag = false;
-                    NumberOfPeopleChanged(this, null);
-                    turnOnKinect();
-                });
-            }
+                PIR_Detection = true;
             else if (msg.Equals("OFF"))
-                Dispatcher.Invoke(() => {
-                    turnOffKinectFlag = true;
-                    NumberOfPeopleChanged(this, null);
-                });
+                PIR_Detection = false;
         }
-
-        private void NumberOfPeopleChanged(object sender, EventArgs e)
+        
+        private void DetectionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (FrameHandler != null)
+            
+            if (PIR_Detection)
+                turnOnKinect();
+            else if (frameHandler != null)
             {
-                if (turnOffKinectFlag && FrameHandler.TrackedPeople == 0)
-                {
+                if (frameHandler.TrackedPeople == 0)
                     timer.Start();
-                    return;
-                }
+                else
+                    timer.Close();
             }
-            timer.Close();
+            else ; //TODO decide what to do
         }
         #endregion
-
-        #region KinectOffAndOn
+      
+        #region Kinect_Off_And_On
         private void turnOnKinect()
         {
-            btn_stream.Content = PAUSE;
+            Logger.writeLine("turn on kinect");
+            Dispatcher.Invoke(() => btn_stream.Content = PAUSE);
             if (model != null)
             {
                 model.startKinect();
                 return;
             }
 
-            readHeight();
-            model = Model.getInstance(KINECT_HEIGHT, KINECT_ANGLE);
+            model = Model.getInstance(KINECT_HEIGHT, VERTICAL_ANGLE);
             if (model != null)
             {
-                FrameHandler = new KinectFrameHandler(Screen, model, new AlertHandler(lbl_conection));
-                FrameHandler.NumberOfPeopleChanged += NumberOfPeopleChanged;
-                model.setFrameHandler(FrameHandler);
+                frameHandler = new KinectFrameHandler(Screen, model, new AlertHandler(lbl_conection));
+                frameHandler.PropertyChanged += DetectionPropertyChanged;
+                model.setFrameHandler(frameHandler);
                 model.enableDepthFrame();
                 //model.enableSkeletonFrame();
 
-                angleHandler = new KinectAngleHandler(model.getSensor(), port, horizontalAngle, verticalAngle);
+                angleHandler = new KinectAngleHandler(model.getSensor(), port, -20, 0);
                 model.setAngleHandler(angleHandler);
 
                 model.startKinect();
@@ -159,7 +176,8 @@ namespace KinectApp
        
         private void turnOffKinect()
         {
-            btn_stream.Content = STREAM;
+            Logger.writeLine("turn off kinect");
+            Dispatcher.Invoke(() => btn_stream.Content = STREAM);
             if (model!=null)
                 model.stopKinect();
         }
@@ -171,7 +189,7 @@ namespace KinectApp
             if (btn_stream.Content.Equals(STREAM))
                 turnOnKinect();
             else
-                turnOnKinect();
+                turnOffKinect();
         }
         
         private void angleChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -216,51 +234,11 @@ namespace KinectApp
 
         private void update_Setting(object sender, RoutedEventArgs e)
         {
-            while (!updateHeight())
-                MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //TODO open update settings windows
+            UpdateSettings us = new UpdateSettings();
+            us.Show();
+            us.Activate();
         }
         #endregion
-
-        #region read/update HEIGHT
-        public void readHeight()
-        {
-            KINECT_HEIGHT = Double.Parse(ConfigurationManager.AppSettings["KINECT_HEIGHT"]);
-            KINECT_ANGLE = Int32.Parse(ConfigurationManager.AppSettings["KINECT_ANGLE"]);
-               
-            if (model != null)
-                model.setKinectHeight(KINECT_HEIGHT);
-        }
-
-        public bool updateHeight()
-        {
-            string result = Microsoft.VisualBasic.Interaction.InputBox("Please enter kinect height in meters and angle degrees.\nFor example 1.75 0");
-            double height;
-            int angle;
-
-            string[] str = result.Split(' ');
-            if (str.Count() != 2)
-                return false;
-            try { 
-                height = Convert.ToDouble(str[0]);
-                angle = Convert.ToInt32(str[1]);
-            }
-            catch { return false; }
-
-            KINECT_HEIGHT = height;
-            KINECT_ANGLE = angle;
-
-            if (model != null)
-            {
-                model.setKinectHeight(KINECT_HEIGHT);
-                model.setKinectAngle(KINECT_ANGLE);
-            }
-            Configuration config = ConfigurationManager.OpenExeConfiguration(System.Reflection.Assembly.GetEntryAssembly().Location);
-            config.AppSettings.Settings["KINECT_HEIGHT"].Value = KINECT_HEIGHT.ToString();
-            config.AppSettings.Settings["KINECT_ANGLE"].Value = KINECT_ANGLE.ToString();
-            config.Save(ConfigurationSaveMode.Minimal); 
-            return true;
-        }
-        #endregion
-
     }
 }
