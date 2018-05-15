@@ -16,12 +16,37 @@ namespace KinectApp
         IPAddress serverIP;
         IPEndPoint endPoint;
 
-        public AlertHandler(Label lbl)
+        public AlertHandler(Label lbl, string ip, int port)
         {
             this.lbl = lbl;
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            serverIP = IPAddress.Parse("192.168.1.101");
-            endPoint = new IPEndPoint(serverIP, 11000);
+            serverIP = IPAddress.Parse(ip);
+            endPoint = new IPEndPoint(serverIP, port);
+        }
+
+        public void alert(string str)
+        {
+            try
+            {
+                socket.SendTo(Encoding.ASCII.GetBytes(str), endPoint);
+            }
+            catch (Exception e)
+            {
+                lbl.Content = e.Message;
+            }
+        }
+
+        public void Alert(int roomNumber, int peopleCount, int peoplePosition)
+        {
+            byte[] msg = new byte[] { (byte)roomNumber, (byte)peopleCount, (byte)peoplePosition };
+            try
+            {
+                socket.SendTo(msg, endPoint);
+            }
+            catch (Exception ex)
+            {
+                //TODO log ex
+            }
         }
 
         public void alert(int numberOfPeople, ArrayList alerts)

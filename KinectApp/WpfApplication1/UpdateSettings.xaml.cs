@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Net;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -9,57 +8,72 @@ namespace KinectApp
     public partial class UpdateSettings : Window, INotifyPropertyChanged
     {
         #region Property_Bindings
-        public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
-        private string _kinectHeight="", _verticalAngle="", _serverIP="", _serverPort="";
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        public void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+       
+        private string kinectHeight="", verticalAngle="", serverIP="", serverPort="";
+
         public string KinectHeight  
         {
-            get { return _kinectHeight; }
+            get { return kinectHeight; }
             set
             {
-                if (!_kinectHeight.Equals(value))
+                if (!kinectHeight.Equals(value))
                 {
-                    _kinectHeight = value;
-                    if (PropertyChanged!=null)
-                        PropertyChanged(this, new PropertyChangedEventArgs("KinectHeight"));
+                    kinectHeight = value;
+                    if (PropertyChanged != null)
+                        OnPropertyChanged();
+//                        PropertyChanged(this, new PropertyChangedEventArgs("KinectHeight"));
                 }
             }
         }
+
         public string VerticalAngle
         {
-            get { return _verticalAngle; }
+            get { return verticalAngle; }
             set
             {
-                if (!_verticalAngle.Equals(value))
+                if (!verticalAngle.Equals(value))
                 {
-                    _verticalAngle = value;
+                    verticalAngle = value;
                     if (PropertyChanged!=null)
-                        PropertyChanged(this, new PropertyChangedEventArgs("VerticalAngle"));
+                        OnPropertyChanged();
+//                    PropertyChanged(this, new PropertyChangedEventArgs("VerticalAngle"));
                 }
             }
         }
+
         public string ServerIP
         {
-            get { return _serverIP; }
+            get { return serverIP; }
             set
             {
-                if (!_serverIP.Equals(value))
+                if (!serverIP.Equals(value))
                 {
-                    _serverIP = value;
+                    serverIP = value;
                     if (PropertyChanged != null)
-                        PropertyChanged(this, new PropertyChangedEventArgs("ServerIP"));
+                        OnPropertyChanged();
+//                    PropertyChanged(this, new PropertyChangedEventArgs("ServerIP"));
                 }
             }
         }
+
         public string ServerPort
         {
-            get { return _serverPort; }
+            get { return serverPort; }
             set
             {
-                if (!_serverPort.Equals(value))
+                if (!serverPort.Equals(value))
                 {
-                    _serverPort = value;
+                    serverPort = value;
                     if (PropertyChanged != null)
-                        PropertyChanged(this, new PropertyChangedEventArgs("ServerPort"));
+                        OnPropertyChanged();
+//                    PropertyChanged(this, new PropertyChangedEventArgs("ServerPort"));
                 }
             }
         }
@@ -77,7 +91,7 @@ namespace KinectApp
             ServerPort = Properties.Settings.Default.SERVER_PORT.ToString();
         }
 
-        private bool inputValidation()
+        private bool InputValidation()
         {
             //temporarily variables to check validation
             float kinectHeight;
@@ -97,9 +111,9 @@ namespace KinectApp
             return false;
         }
 
-        private void save(object sender, RoutedEventArgs e)
+        private void Save(object sender, RoutedEventArgs e)
         {
-            if (!inputValidation())
+            if (!InputValidation())
                 return;
             
             Properties.Settings.Default.KINECT_HEIGHT = float.Parse(KinectHeight);

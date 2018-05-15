@@ -7,8 +7,9 @@ namespace KinectApp
     class KinectAngleHandler : Model.IKinectAngleHandler
     {
         #region Variables
-        private const String ANGLE = "angle";
-        private const int MAX_HORIZONTAL_ANGLE = 25, MIN_HORIZONTAL_ANGLE = -25;
+        private static readonly string SCAN = "scan", ANGLE = "angle";
+        public static readonly int DEAFULT_VERTICAL_ANGLE = -20, DEAFULT_HORIZONTAL_ANGLE=0,
+            MAX_HORIZONTAL_ANGLE = 25, MIN_HORIZONTAL_ANGLE = -25;
 
         private KinectSensor kinect;
         private SafeSerialPort port;
@@ -35,7 +36,7 @@ namespace KinectApp
         public int HorizontalAngle
         {
             get { return horizontalAngle; }
-            set
+            private set
             {
                 if (value > MAX_HORIZONTAL_ANGLE)
                     horizontalAngle = MAX_HORIZONTAL_ANGLE;
@@ -48,7 +49,7 @@ namespace KinectApp
         #endregion
 
         #region Constructor
-        public KinectAngleHandler(KinectSensor kinect, SafeSerialPort port,int verticalAngle,int horizontalAngle)
+        public KinectAngleHandler(KinectSensor kinect, SafeSerialPort port)
         {
             Logger.writeLine("Angle handler constractor");
             if (kinect == null)
@@ -56,9 +57,9 @@ namespace KinectApp
             this.kinect = kinect;
 
             setSerialPort(port);
-            //Set vertical & horizobtal angles
-            changeHorizontalAngleTo(horizontalAngle);
-            changeVerticalAngleTo(verticalAngle);
+            //Set default vertical & horizobtal angles
+            ChangeVerticalAngleTo(DEAFULT_VERTICAL_ANGLE);
+            ChangeHorizontalAngleTo(DEAFULT_HORIZONTAL_ANGLE);
         }
         #endregion
 
@@ -85,13 +86,13 @@ namespace KinectApp
         #endregion
 
         #region Vertical
-        public void changeVerticalAngleBy(int angle)
+        public void ChangeVerticalAngleBy(int angle)
         {
             Logger.writeLine("change vertical angle by " + angle);
-            changeVerticalAngleTo(VerticalAngle + angle);
+            ChangeVerticalAngleTo(VerticalAngle + angle);
         }
 
-        public void changeVerticalAngleTo(int angle)
+        public void ChangeVerticalAngleTo(int angle)
         {
             Logger.writeLine("change vertical angle to " + angle);
             if (angle <= kinect.MaxElevationAngle && angle >= kinect.MinElevationAngle)
@@ -116,13 +117,13 @@ namespace KinectApp
         #endregion
 
         #region Horizontical
-        public void changeHorizontalAngleBy(int angle)
+        public void ChangeHorizontalAngleBy(int angle)
         {
             Logger.writeLine("change horizontal angle by " + angle);
-            changeHorizontalAngleTo(HorizontalAngle + angle);
+            ChangeHorizontalAngleTo(HorizontalAngle + angle);
         }
 
-        public void changeHorizontalAngleTo(int angle)
+        public void ChangeHorizontalAngleTo(int angle)
         {
             Logger.writeLine("change horizontal angle to " + angle);
             if (port == null)
@@ -134,11 +135,10 @@ namespace KinectApp
         #endregion
 
         #region Scan
-        public void scan()
+        public void Scan()
         {
-            Logger.writeLine("scan");
-            changeVerticalAngleTo(0);
-            port.WriteLine("scan");
+            ChangeVerticalAngleTo(DEAFULT_VERTICAL_ANGLE);
+            port.WriteLine(SCAN);
         }
         #endregion
 

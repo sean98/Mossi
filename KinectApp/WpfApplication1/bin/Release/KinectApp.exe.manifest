@@ -43,11 +43,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
-      <assemblyIdentity name="Microsoft.Kinect" version="1.8.0.0" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KinectApp.exe" size="104928">
       <assemblyIdentity name="KinectApp" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -55,7 +50,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MpUfCueT4CIoZmusizOyyq1jgveJD5QZROaj6u+T5XQ=</dsig:DigestValue>
+        <dsig:DigestValue>ts2r7cD0fdJjTKHTHA+iX2Ez2I4wSqa5VyUmuTHkYeU=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.Kinect.dll" size="173056">
+      <assemblyIdentity name="Microsoft.Kinect" version="1.8.0.0" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>sTNbBT9HDF9w++RQJyE4uAbSULGYqyETizV0n1EB2dg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -68,13 +75,13 @@
       <dsig:DigestValue>MvglpVKk7NSWfOAhtiI1ghVDSLHhzTSAgFEeoD5n58I=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="KinectApp.exe.config" size="1195">
+  <file name="KinectApp.exe.config" size="1279">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>cof9+jjceOyCcBflHZyJq9gl8Bu3uSxWTyFZg2fOYwA=</dsig:DigestValue>
+      <dsig:DigestValue>hjaA2WIUF8DuHPLnT946FYQmefSyyTZSGL4Uow6+8Ko=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

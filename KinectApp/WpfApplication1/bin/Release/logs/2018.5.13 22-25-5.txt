@@ -1,0 +1,424 @@
+Angle handler constractor
+Serial port established
+change vertical angle to -20
+change horizontal angle to 0
+to arduino angle
+0 => 90
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 10
+change horizontal angle to 10
+to arduino angle
+10 => 115
+change vertical angle by -12
+change vertical angle to -32
+change horizontal angle by 7
+change horizontal angle to 7
+to arduino angle
+7 => 107
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 8
+change horizontal angle to 8
+to arduino angle
+8 => 110
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 9
+change horizontal angle to 9
+to arduino angle
+9 => 112
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 9
+change horizontal angle to 9
+to arduino angle
+9 => 112
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 9
+change horizontal angle to 9
+to arduino angle
+9 => 112
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 8
+change horizontal angle to 8
+to arduino angle
+8 => 110
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 8
+change horizontal angle to 8
+to arduino angle
+8 => 110
+change vertical angle by -11
+change vertical angle to -31
+change horizontal angle by 9
+change horizontal angle to 9
+to arduino angle
+9 => 112
+change vertical angle by -11
+change vertical angle to -31
+change horizontal angle by 9
+change horizontal angle to 9
+to arduino angle
+9 => 112
+change vertical angle by -11
+change vertical angle to -31
+change horizontal angle by 9
+change horizontal angle to 9
+to arduino angle
+9 => 112
+change vertical angle by -11
+change vertical angle to -31
+change horizontal angle by 9
+change horizontal angle to 9
+to arduino angle
+9 => 112
+change vertical angle by -11
+change vertical angle to -31
+change horizontal angle by 9
+change horizontal angle to 9
+to arduino angle
+9 => 112
+change vertical angle by -11
+change vertical angle to -31
+change horizontal angle by 10
+change horizontal angle to 10
+to arduino angle
+10 => 115
+change vertical angle by -11
+change vertical angle to -31
+change horizontal angle by 9
+change horizontal angle to 9
+to arduino angle
+9 => 112
+change vertical angle by -12
+change vertical angle to -32
+change horizontal angle by 11
+change horizontal angle to 11
+to arduino angle
+11 => 118
+change vertical angle by -12
+change vertical angle to -32
+change horizontal angle by 8
+change horizontal angle to 8
+to arduino angle
+8 => 110
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 8
+change horizontal angle to 8
+to arduino angle
+8 => 110
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 7
+change horizontal angle to 7
+to arduino angle
+7 => 107
+from arduino angle
+110 => 7
+angle = 110
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 7
+change horizontal angle to 14
+to arduino angle
+14 => 125
+from arduino angle
+107 => 6
+angle = 107
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 8
+change horizontal angle to 14
+to arduino angle
+14 => 125
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 8
+change horizontal angle to 14
+to arduino angle
+14 => 125
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 8
+change horizontal angle to 14
+to arduino angle
+14 => 125
+from arduino angle
+125 => 13
+angle = 125
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 8
+change horizontal angle to 21
+to arduino angle
+21 => 143
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 9
+change horizontal angle to 22
+to arduino angle
+22 => 146
+from arduino angle
+143 => 20
+angle = 143
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 9
+change horizontal angle to 29
+to arduino angle
+29 => 163
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 9
+change horizontal angle to 29
+to arduino angle
+29 => 163
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 8
+change horizontal angle to 28
+to arduino angle
+28 => 161
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 8
+change horizontal angle to 28
+to arduino angle
+28 => 161
+from arduino angle
+146161 => 57282
+angle = 146161
+from arduino angle
+161 => 27
+angle = 161
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 9
+change horizontal angle to 34
+to arduino angle
+34 => 176
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 8
+change horizontal angle to 33
+to arduino angle
+33 => 174
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 8
+change horizontal angle to 33
+to arduino angle
+33 => 174
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 8
+change horizontal angle to 33
+to arduino angle
+33 => 174
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 8
+change horizontal angle to 33
+to arduino angle
+33 => 174
+from arduino angle
+174 => 32
+angle = 174
+from arduino angle
+174 => 32
+angle = 174
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 8
+change horizontal angle to 33
+to arduino angle
+33 => 174
+from arduino angle
+174 => 32
+angle = 174
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 9
+change horizontal angle to 34
+to arduino angle
+34 => 176
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 10
+change horizontal angle to 35
+to arduino angle
+35 => 179
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 10
+change horizontal angle to 35
+to arduino angle
+35 => 179
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 10
+change horizontal angle to 35
+to arduino angle
+35 => 179
+from arduino angle
+179 => 34
+angle = 179
+from arduino angle
+179 => 34
+angle = 179
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 10
+change horizontal angle to 35
+to arduino angle
+35 => 179
+from arduino angle
+179 => 34
+angle = 179
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 10
+change horizontal angle to 35
+to arduino angle
+35 => 179
+change vertical angle by -14
+change vertical angle to -34
+change horizontal angle by 10
+change horizontal angle to 35
+to arduino angle
+35 => 179
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 9
+change horizontal angle to 34
+to arduino angle
+34 => 176
+change vertical angle by -16
+change vertical angle to -36
+change horizontal angle by 8
+change horizontal angle to 33
+to arduino angle
+33 => 174
+from arduino angle
+176 => 33
+angle = 176
+change vertical angle by -13
+change vertical angle to -33
+change horizontal angle by 6
+change horizontal angle to 31
+to arduino angle
+31 => 169
+from arduino angle
+174 => 32
+angle = 174
+change vertical angle by -15
+change vertical angle to -35
+change horizontal angle by 7
+change horizontal angle to 32
+to arduino angle
+32 => 171
+from arduino angle
+169 => 30
+angle = 169
+change vertical angle by -16
+change vertical angle to -36
+change horizontal angle by 6
+change horizontal angle to 31
+to arduino angle
+31 => 169
+from arduino angle
+171 => 31
+angle = 171
+change vertical angle by -16
+change vertical angle to -36
+change horizontal angle by 7
+change horizontal angle to 32
+to arduino angle
+32 => 171
+change vertical angle by -16
+change vertical angle to -36
+change horizontal angle by 8
+change horizontal angle to 33
+to arduino angle
+33 => 174
+from arduino angle
+169 => 30
+angle = 169
+closing program

@@ -25,7 +25,7 @@ namespace KinectApp
         private IKinectAngleHandler angleHandler;
         #endregion
 
-        #region Constructor
+        #region SingeltoneAndConstructor
         private Model(KinectSensor kinect, double KINECT_HEIGHT, int KINECT_ANGLE)
         {
             this.kinect = kinect;
@@ -45,41 +45,29 @@ namespace KinectApp
         #endregion
 
         #region Frame Handler
-        public void setFrameHandler(IKinectFrameHandler frameHandler)
+        public void SetFrameHandler(IKinectFrameHandler frameHandler)
         {
             this.frameHandler = frameHandler;
-            kinect.DepthFrameReady += frameHandler.depthFrameReady;
-            kinect.SkeletonFrameReady += frameHandler.skeletonFrameReady;
+            kinect.DepthFrameReady += frameHandler.DepthFrameReady;
+            kinect.SkeletonFrameReady += frameHandler.SkeletonFrameReady;
         }
 
-        public void enableDepthFrame()
+        public void EnableDepthFrame()
         {
             if (frameHandler != null)
-                kinect.DepthStream.Enable();
+                kinect.DepthStream.Enable(DepthImageFormat.Resolution80x60Fps30);
             else
                 throw new System.InvalidOperationException("Cannot using frame methods before setting a frame Handler. " +
                     "use: setFrameHandler(IKinectFrameHandler frameHandler)");
 
         }
 
-        public void disableDepthFrame()
+        public void DisableDepthFrame()
         {
             kinect.DepthStream.Disable();
         }
 
-        public void startKinect()
-        {
-            kinect.Start();
-        }
-
-        public void stopKinect()
-        {
-            kinect.Stop();
-        }
-
-        //** skeleton options **//
-
-        public void enableSkeletonFrame()
+        public void EnableSkeletonFrame()
         {
             if (frameHandler != null)
                 kinect.SkeletonStream.Enable();
@@ -89,14 +77,23 @@ namespace KinectApp
 
         }
 
-        public void disableSkeletonFrame()
+        public void DisableSkeletonFrame()
         {
             kinect.SkeletonStream.Disable();
         }
+
+        public void StartKinect()
+        {
+            kinect.Start();
+        }
+
+        public void StopKinect()
+        {
+            kinect.Stop();
+        }        
         #endregion
 
         #region Angle Handler
-        //** Angle movement **//
         public void setAngleHandler(IKinectAngleHandler angleHandler)
         {
             this.angleHandler = angleHandler;
@@ -105,7 +102,7 @@ namespace KinectApp
         public void changeVerticalAngleBy(int angle)
         {
             if (angleHandler != null)
-                angleHandler.changeVerticalAngleBy(angle);
+                angleHandler.ChangeVerticalAngleBy(angle);
             else
                 throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
                     "use: setAngleHandler(IKinectAngleMovement angleHandler)");
@@ -114,7 +111,7 @@ namespace KinectApp
         public void changeVerticalAngleTo(int angle)
         {
             if (angleHandler != null)
-                angleHandler.changeVerticalAngleTo(angle);
+                angleHandler.ChangeVerticalAngleTo(angle - KINECT_ANGLE);
             else
                 throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
                     "use: setAngleHandler(IKinectAngleMovement angleHandler)");
@@ -123,8 +120,7 @@ namespace KinectApp
         public int getVerticalAngle()
         {
             if (angleHandler != null)
-                return angleHandler.VerticalAngle;
-
+                return angleHandler.VerticalAngle + KINECT_ANGLE;
             throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
                     "use: setAngleHandler(IKinectAngleMovement angleHandler)");
         }
@@ -132,7 +128,7 @@ namespace KinectApp
         public void changeHorizontalAngleBy(int angle)
         {
             if (angleHandler != null)
-                angleHandler.changeHorizontalAngleBy(angle);
+                angleHandler.ChangeHorizontalAngleBy(angle);
             else
                 throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
                     "use: setAngleHandler(IKinectAngleMovement angleHandler)");
@@ -141,7 +137,7 @@ namespace KinectApp
         public void changeHorizontalAngleTo(int angle)
         {
             if (angleHandler != null)
-                angleHandler.changeHorizontalAngleTo(angle);
+                angleHandler.ChangeHorizontalAngleTo(angle);
             else
                 throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
                     "use: setAngleHandler(IKinectAngleMovement angleHandler)");
@@ -159,7 +155,7 @@ namespace KinectApp
         public void scan()
         {
             if (angleHandler != null)
-                angleHandler.scan();
+                angleHandler.Scan();
             else
                 throw new System.InvalidOperationException("Cannot using angle methods before setting an angle Handler. " +
                     "use: setAngleHandler(IKinectAngleMovement angleHandler)");
@@ -167,7 +163,6 @@ namespace KinectApp
         #endregion
 
         #region Getters
-
         public IKinectAngleHandler getAngleHandler()
         {
             return angleHandler;
@@ -208,32 +203,26 @@ namespace KinectApp
 
         public interface IKinectFrameHandler
         {
-            void skeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e);
+            void SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e);
 
-            void depthFrameReady(object sender, DepthImageFrameReadyEventArgs e);
+            void DepthFrameReady(object sender, DepthImageFrameReadyEventArgs e);
         }
 
         public interface IKinectAngleHandler
         {
-            void changeVerticalAngleBy(int angle);
+            void ChangeVerticalAngleBy(int angle);
 
-            void changeVerticalAngleTo(int angle);
+            void ChangeVerticalAngleTo(int angle);
 
-            int VerticalAngle
-            {
-                get;
-            }
+            int VerticalAngle { get; }
 
-            void changeHorizontalAngleBy(int angle);
+            void ChangeHorizontalAngleBy(int angle);
 
-            void changeHorizontalAngleTo(int angle);
+            void ChangeHorizontalAngleTo(int angle);
 
-            int HorizontalAngle
-            {
-                get;
-            }
+            int HorizontalAngle { get; }
 
-            void scan();
+            void Scan();
         }
     }
 }

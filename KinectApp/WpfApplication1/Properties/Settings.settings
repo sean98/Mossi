@@ -9,7 +9,7 @@
       <Value Profile="(Default)">2.1</Value>
     </Setting>
     <Setting Name="SERVER_IP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.1.101</Value>
+      <Value Profile="(Default)">172.20.21.180</Value>
     </Setting>
     <Setting Name="SERVER_PORT" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">11000</Value>
