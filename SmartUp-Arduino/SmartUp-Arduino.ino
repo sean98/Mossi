@@ -3,16 +3,17 @@
 #include <DHT.h>
 #include <DHT_U.h>
 
-#define DHT_PIN   11      // Pin which is connected to the DHT sensor.
-#define SERVO_PIN 9       // Servo motor pin
-#define RELAY_PIN 8       // Relay pin
-#define PIR_PIN	  2		  // PIR pin
+#define DHT_PIN   6     // Pin which is connected to the DHT sensor.
+#define SERVO_PIN 5     // Servo motor pin
+#define RELAY_PIN 4     // Relay pin
+#define DOOR_PIN  3     // Door pin
+#define PIR_PIN	  2		// PIR pin
 
 #define DHT_TYPE  DHT22   // DHT 22 (AM2302)
 #define DHT_DELAY 2000    // DHT recommended time between measurements
 
-#define MAX_ANGLE     180 //max angle of the motor
-#define MIN_ANGLE     0   //min angle of the motor
+#define MAX_ANGLE     90 //max angle of the motor
+#define MIN_ANGLE     50   //min angle of the motor
 #define DEFAULT_ANGLE 90  //default angle of the motor
 #define SERVO_DEALY 1000  //duration of every motor action (defined by kinect frequency)
 
@@ -20,17 +21,19 @@
 #define SCAN "scan"     //const for scan
 #define ANGLE "angle"   //const for angle
 
-#define RELAY_TEMPERTURE 30 //temperature to turn on the relay
+#define RELAY_TEMPERTURE 30//temperature to turn on the relay
 #define RELAY_HUMIDITY   80 //humidity to turn on the relay
 
 int curAngle = DEFAULT_ANGLE, scan_speed = 60; //define current angle and scanning speed
 DHT_Unified dht(DHT_PIN, DHT_TYPE); //create dht object
 Servo servo;//create servo motor object
 int DhtTimeElapsed = 0; //represent the time elapsed from last dht check
+int doorVal = HIGH;
 
 void setup() {
 	//initialize PIR sensor with Interrupt
 	pinMode(PIR_PIN, INPUT_PULLUP);
+	attachInterrupt(digitalPinToInterrupt(DOOR_PIN), DOOR_Interrupt, CHANGE);
 	attachInterrupt(digitalPinToInterrupt(PIR_PIN), PIR_Interrupt, CHANGE);
 	//Initialize servo
 	servo.attach(SERVO_PIN);
@@ -44,6 +47,8 @@ void setup() {
 }
 
 void loop() {
+	//Serial.print("Hello");
+  //DOOR_Interrupt();
 	String msg = readLine();
 
 	if (isNumeric(msg))
@@ -65,12 +70,25 @@ void loop() {
 		DhtTimeElapsed = 0;
 		sensors_event_t event;
 		float t = getTemperture(event);
+    //Serial.print("Temperture " + ((String)t) + "\n");
 		float h = getHumidity(event);
+    //Serial.print("Humidity " + ((String)h) + "\n");
 		if (t > RELAY_TEMPERTURE && h > RELAY_HUMIDITY)
 		digitalWrite(RELAY_PIN, HIGH);
 		else
 		digitalWrite(RELAY_PIN, LOW);
 	}
+}
+
+void DOOR_Interrupt() {
+  int val = digitalRead(DOOR_PIN);
+  //if (val!=doorVal)
+  //{
+	    if (val != LOW)    
+    Serial.print("OPENED\n");
+  else    
+    Serial.print("CLOSED\n");
+  //}
 }
 
 void PIR_Interrupt () {
@@ -158,5 +176,5 @@ void moveMotorTo(int newAngle)
 		servo.write(curAngle);
 		delay(delayTime);
 	}
-	Serial.print((String)curAngle + "\n");
+	//Serial.print((String)curAngle + "\n");
 }

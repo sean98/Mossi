@@ -4,7 +4,11 @@ C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplicat
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Debug\KinectApp.exe
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Debug\KinectApp.pdb
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Debug\Microsoft.Kinect.dll
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Debug\Microsoft.Windows.Shell.dll
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Debug\MossiApi.dll
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Debug\MossiApi.pdb
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Debug\Microsoft.Kinect.xml
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\bin\Debug\Microsoft.Windows.Shell.pdb
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Debug\KinectApp.csprojAssemblyReference.cache
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Debug\Interop.KinectManagement.dll
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\WpfApplication1\obj\Debug\KinectApp.csproj.ResolveComReference.cache

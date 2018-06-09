@@ -25,7 +25,7 @@ namespace KinectApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("-20")]
         public int VERTICAL_ANGLE {
             get {
                 return ((int)(this["VERTICAL_ANGLE"]));
@@ -37,7 +37,7 @@ namespace KinectApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.19")]
         public float KINECT_HEIGHT {
             get {
                 return ((float)(this["KINECT_HEIGHT"]));
@@ -49,7 +49,7 @@ namespace KinectApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("172.20.21.180")]
+        [global::System.Configuration.DefaultSettingValueAttribute("172.20.22.102")]
         public string SERVER_IP {
             get {
                 return ((string)(this["SERVER_IP"]));

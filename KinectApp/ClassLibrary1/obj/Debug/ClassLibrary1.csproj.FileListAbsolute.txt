@@ -1,0 +1,9 @@
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\bin\Debug\Microsoft.Kinect.dll
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\bin\Debug\Microsoft.Kinect.xml
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\ClassLibrary1.csprojAssemblyReference.cache
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\ClassLibrary1.csproj.CoreCompileInputs.cache
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\ClassLibrary1.csproj.CopyComplete
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\bin\Debug\ClassLibrary999.dll
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\bin\Debug\ClassLibrary999.pdb
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\ClassLibrary999.dll
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\ClassLibrary999.pdb

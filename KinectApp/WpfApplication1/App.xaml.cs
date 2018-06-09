@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace WpfApplication1
+namespace KinectApp
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -14,5 +14,14 @@ namespace WpfApplication1
 
     public partial class App : Application
     {
+        public App()
+        {
+        }
+
+        public void Restart()
+        {
+
+        }
     }
+
 }

@@ -1,0 +1,16 @@
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\bin\Release\Console Kinect App.exe.config
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\bin\Release\Console Kinect App.exe
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\bin\Release\Console Kinect App.pdb
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\bin\Release\Microsoft.Kinect.dll
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\bin\Release\MossiApi.dll
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\bin\Release\MossiApi.pdb
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\bin\Release\Microsoft.Kinect.xml
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\obj\Release\Console Kinect App.csprojAssemblyReference.cache
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\obj\Release\Console Kinect App.csproj.CoreCompileInputs.cache
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\obj\Release\Console Kinect App.csproj.CopyComplete
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\obj\Release\Console Kinect App.exe
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\obj\Release\Console Kinect App.pdb
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\bin\Release\Console Kinect App.exe.manifest
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\bin\Release\Console Kinect App.application
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\obj\Release\Console Kinect App.exe.manifest
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\Console Kinect App\obj\Release\Console Kinect App.application

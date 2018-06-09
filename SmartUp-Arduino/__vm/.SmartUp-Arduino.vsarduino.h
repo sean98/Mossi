@@ -20,6 +20,7 @@
 #define ARDUINO_ARCH_AVR
 //
 //
+void DOOR_Interrupt();
 void PIR_Interrupt ();
 float getTemperture(sensors_event_t event);
 float getHumidity(sensors_event_t event);

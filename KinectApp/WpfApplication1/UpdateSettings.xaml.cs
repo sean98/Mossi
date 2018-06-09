@@ -8,7 +8,6 @@ namespace KinectApp
     public partial class UpdateSettings : Window, INotifyPropertyChanged
     {
         #region Property_Bindings
-
         public event PropertyChangedEventHandler PropertyChanged;
         
         public void OnPropertyChanged([CallerMemberName] string name = null)
@@ -121,8 +120,9 @@ namespace KinectApp
             Properties.Settings.Default.SERVER_IP = ServerIP;
             Properties.Settings.Default.SERVER_PORT = int.Parse(ServerPort);
             Properties.Settings.Default.Save();
-            
-            this.Close();
+        
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
         }
     }
 }

@@ -1,0 +1,28 @@
+Angle handler constractor
+Serial port established
+change vertical angle to -20
+change horizontal angle to 0
+to arduino angle
+0 => 90
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+change vertical angle to -20
+closing program
