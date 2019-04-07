@@ -53,7 +53,7 @@ void loop() {
 	if (isNumeric(msg));
 		moveMotorTo(msg.toInt());
 	
-	else */if (msg.equals(INIT))  //connect to program from PC
+	else if (msg.equals(INIT))  //connect to program from PC
 		Serial.print((String)INIT + "\n");
 	
 	else if (msg.equals(SCAN))
