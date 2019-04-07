@@ -1,0 +1,18 @@
+\KinectApp\ClassLibrary1\bin
+\KinectApp\ClassLibrary1\obj
+\KinectApp\Console Kinect App\bin
+\KinectApp\Console Kinect App\obj
+\KinectApp\packages
+\KinectApp\WpfApp1\bin
+\KinectApp\WpfApp1\obj
+\KinectApp\WpfApplication1\bin
+\KinectApp\WpfApplication1\obj
+\KinectApp\WpfApplication1\publish
+\SmartUp-Arduino\.vs
+\SmartUp-Arduino\__vm
+\SmartUp-Arduino\Debug
+\SmartUp-Arduino\SmartUp-Arduino.componentinfo.xml
+\SmartUp-Arduino\SmartUp-Arduino.cppproj
+*.csproj
+*.user
+*.pfx
