@@ -7,4 +7,4 @@ The project was designed for "Geha", a mental health center child and adolescent
 ![Slide 2](images/Slide2.JPG)
 
 a short video explaining about the project in hebrew:
-![Watch the video](https://drive.google.com/file/d/1tzOvWAgUcFmCEl9ote1fAz6pT1Ugsq5N/view?usp=sharing)
+[![Watch the video]()](https://drive.google.com/file/d/1tzOvWAgUcFmCEl9ote1fAz6pT1Ugsq5N/view?usp=sharing)
