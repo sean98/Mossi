@@ -12,8 +12,8 @@
 #define DHT_TYPE  DHT22   // DHT 22 (AM2302)
 #define DHT_DELAY 2000    // DHT recommended time between measurements
 
-#define MAX_ANGLE     90 //max angle of the motor
-#define MIN_ANGLE     50   //min angle of the motor
+#define MAX_ANGLE     125 //max angle of the motor
+#define MIN_ANGLE     45   //min angle of the motor
 #define DEFAULT_ANGLE 90  //default angle of the motor
 #define SERVO_DEALY 1000  //duration of every motor action (defined by kinect frequency)
 
@@ -22,7 +22,7 @@
 #define ANGLE "angle"   //const for angle
 
 #define RELAY_TEMPERTURE 30//temperature to turn on the relay
-#define RELAY_HUMIDITY   80 //humidity to turn on the relay
+#define RELAY_HUMIDITY   95 //humidity to turn on the relay
 
 int curAngle = DEFAULT_ANGLE, scan_speed = 60; //define current angle and scanning speed
 DHT_Unified dht(DHT_PIN, DHT_TYPE); //create dht object
@@ -51,33 +51,40 @@ void loop() {
   //DOOR_Interrupt();
 	String msg = readLine();
 
-	if (isNumeric(msg))
-		moveMotorTo(msg.toInt());
-	else if (msg.equals(INIT))  //connect to program from PC
+	/*if (isNumeric(msg));
+		//moveMotorTo(msg.toInt());
+	
+	else */if (msg.equals(INIT))  //connect to program from PC
 		Serial.print((String)INIT + "\n");
+	/*
 	else if (msg.equals(SCAN))
 		scan();
 	else if (msg.equals(ANGLE))
 		Serial.print((String)curAngle + "\n");
+	*/
+	/*
 	else if (DhtTimeElapsed < DHT_DELAY)  //no valid message, read DHT with delay
 	{
 		int tmp = min(DHT_DELAY - DhtTimeElapsed, 500);
 		delay(tmp);
 		DhtTimeElapsed += tmp;
 	}
+	*/
+	/*
 	if (DhtTimeElapsed >= DHT_DELAY) //can measure DHT without delay
 	{
 		DhtTimeElapsed = 0;
 		sensors_event_t event;
 		float t = getTemperture(event);
-    //Serial.print("Temperture " + ((String)t) + "\n");
+//    Serial.print("Temperture " + ((String)t) + " ");
 		float h = getHumidity(event);
-    //Serial.print("Humidity " + ((String)h) + "\n");
+//    Serial.print("Humidity " + ((String)h) + "\n");
 		if (t > RELAY_TEMPERTURE && h > RELAY_HUMIDITY)
-		digitalWrite(RELAY_PIN, HIGH);
+			digitalWrite(RELAY_PIN, HIGH);
 		else
-		digitalWrite(RELAY_PIN, LOW);
+			digitalWrite(RELAY_PIN, LOW);
 	}
+	*/
 }
 
 void DOOR_Interrupt() {

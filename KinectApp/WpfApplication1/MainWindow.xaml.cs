@@ -29,22 +29,17 @@ namespace KinectApp
 
 
         //variables from settings
-        private double KINECT_HEIGHT;
-        private int VERTICAL_ANGLE;
-        private string SERVER_IP;
         private int SERVER_PORT;
+        private string SERVER_IP;
+        private int VERTICAL_ANGLE;
+        private double KINECT_HEIGHT;
 
-        private System.Timers.Timer timer;
-        private int timeForTurnOff = 10;
 
-        private bool pir_detection = true;//true only for testing!!! should be false
-        private bool doorClosed = false;
+        private int timeForTurnOff = 30;//seconds
+        private System.Timers.Timer shutDownTimer, restartTimer;
 
-        private bool IsSituation(byte state, Situations s)
-        {
-            return (state & (1 << (byte)s)) == 1 ? true : false;
-        }
-
+        //Properties
+        private bool pir_detection = false; //true only for testing!!! should be false
         public bool PIR_Detection
         {
             get { return pir_detection; }
@@ -58,6 +53,7 @@ namespace KinectApp
             }
         }
 
+        private bool doorClosed = false;
         public bool DoorClosed
         {
             get { return doorClosed; }
@@ -71,7 +67,7 @@ namespace KinectApp
             }
         }
         #endregion
-
+        
         #region constractor
         public MainWindow()
         {
@@ -86,29 +82,15 @@ namespace KinectApp
             port = new SafeSerialPort();
             port.DataReceived += Port_DataReceived;
 
-            timer = new System.Timers.Timer(timeForTurnOff * 1000);
-            timer.Elapsed += Timer_Elapsed;
-            timer.AutoReset = false;
-            
-            /*
-            alerHandler = new AlertHandler("127.0.0.1", 11000);
-            Thread t = new Thread(() => 
-            {
-                PIR_Detection = false;
-                Thread.Sleep(5000);
-                PIR_Detection = true;
-                
-                for (byte i=0;i<64;i++)
-                {
-                    for (byte j = 0; j <= 3; j++)
-                    {
-                        Thread.Sleep(1000);
-                        alerHandler.Alert(new byte[] { 2, j, i });
-                    }
-                }
-            });
-            t.Start();
-            */
+            shutDownTimer = new System.Timers.Timer(timeForTurnOff * 1000);
+            shutDownTimer.Elapsed += ShutDownTimer_Elapsed;
+            shutDownTimer.AutoReset = false;
+
+            restartTimer = new System.Timers.Timer(60*1000);
+            restartTimer.Elapsed += RestartTimer_Elapsed;
+            restartTimer.AutoReset = false;
+
+            TurnOnKinect();
         }
         #endregion
 
@@ -129,11 +111,18 @@ namespace KinectApp
         }
         #endregion
 
-        #region Timer
-        void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        #region Timers
+
+        private void RestartTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (model != null)
-                model.StopKinect();
+            TurnOffKinect();
+            Thread.Sleep(2000);
+            TurnOnKinect();
+        }
+
+        void ShutDownTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            TurnOffKinect();
         }
         #endregion
 
@@ -155,13 +144,15 @@ namespace KinectApp
 
         private void DetectionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            restartTimer.Stop();
+            restartTimer.Start();
             try
             {
-                string alert = "";
+                string alert = "";// = "angle is " + model.getSensor().ElevationAngle + "\n";
                 if (PIR_Detection)
                 {
                     TurnOnKinect();
-                    timer.Close();
+                    shutDownTimer.Close();
                 }
                 byte Position = 0;
                 if (DoorClosed)
@@ -203,16 +194,16 @@ namespace KinectApp
                             Position |= 1 << (byte)Situations.HandsInTheAir;
                             alert += " Hand In The Air";
                         }
-                        /*if (frameHandler.LegsInTheAir)
-                        {
-                            Position |= 1 << (byte)Situations.LegsInTheAir;
-                            alert += " Legs In The Air";
-                        }*/
+                        //if (frameHandler.LegsInTheAir)
+                        //{
+                        //    Position |= 1 << (byte)Situations.LegsInTheAir;
+                        //    alert += " Legs In The Air";
+                        //}
                     }
                     if (frameHandler.TrackedPeople == 0 && !PIR_Detection)
-                        timer.Start();
+                        shutDownTimer.Start();
                     else
-                        timer.Stop();
+                        shutDownTimer.Stop();
                 }
                 Dispatcher.Invoke(() => lbl_conection.Content = alert);
                 if (alerHandler != null)
@@ -233,7 +224,6 @@ namespace KinectApp
                                + " Legs Height: " + Math.Round(((KinectFrameHandler)sender).LegHeight, 2);
         }
 
-
         private void PixelDataReady(object sender, EventArgs e)
         {
             int[] pixels = ((PixelDataEventArgs)e).GetPixelData();
@@ -244,7 +234,6 @@ namespace KinectApp
             System.Runtime.InteropServices.Marshal.Copy(pixels, 0, bmpData.Scan0, pixels.Length);
             bmpFrame.UnlockBits(bmpData);
             Dispatcher.Invoke(() => Screen.Source = imageSourceFromBitmap(bmpFrame));
-            //Screen.Source = imageSourceFromBitmap(bmpFrame);
         }
         #endregion
 
@@ -253,34 +242,35 @@ namespace KinectApp
         {
             Dispatcher.Invoke(() => btn_stream.Content = PAUSE);
             if (model != null)
-            {
                 model.StartKinect();
-                return;
-            }
-
-            model = Model.getInstance(KINECT_HEIGHT, VERTICAL_ANGLE);
-            if (model != null)
+            else
             {
-                alerHandler = new AlertHandler(SERVER_IP, SERVER_PORT);
-                frameHandler = new KinectFrameHandler(model);
-                angleHandler = new KinectAngleHandler(model.getSensor(), port);
-                frameHandler.SituationPropertyChanged += DetectionPropertyChanged;
-                frameHandler.PixelDataReady += PixelDataReady;
-                frameHandler.GenaratePixelData = true;
-                //frameHandler.HeightPropertyChanged += HeightPropertyChanged;
+                model = Model.getInstance(KINECT_HEIGHT, VERTICAL_ANGLE);
+                if (model != null)
+                {
+                    alerHandler = new AlertHandler(SERVER_IP, SERVER_PORT);
+                    frameHandler = new KinectFrameHandler(model);
+                    angleHandler = new KinectAngleHandler(model.getSensor(), port, VERTICAL_ANGLE);
 
-                model.SetFrameHandler(frameHandler);
-                model.setAngleHandler(angleHandler);
+                    frameHandler.PositionPropertyChanged += DetectionPropertyChanged;
+                    frameHandler.PixelDataReady += PixelDataReady;
+                    frameHandler.GenaratePixelData = true;
+                    frameHandler.HeightPropertyChanged += HeightPropertyChanged;
 
-                model.EnableDepthFrame();
-                model.EnableSkeletonFrame();
+                    model.SetFrameHandler(frameHandler);
+                    model.setAngleHandler(angleHandler);
 
-                model.StartKinect();
+                    model.EnableDepthFrame();
+                    model.EnableSkeletonFrame();
+
+                    model.StartKinect();
+                }
             }
         }
 
         private void TurnOffKinect()
         {
+            restartTimer.Stop();
             Dispatcher.Invoke(() => btn_stream.Content = STREAM);
             if (model != null)
                 model.StopKinect();
@@ -355,6 +345,11 @@ namespace KinectApp
         #endregion
 
         #region Helpers
+        private bool IsSituation(byte state, Situations s)
+        {
+            return (state & (1 << (byte)s)) == 1 ? true : false;
+        }
+
         private ImageSource imageSourceFromBitmap(Bitmap bitmap)
         {
             using (MemoryStream memory = new MemoryStream())

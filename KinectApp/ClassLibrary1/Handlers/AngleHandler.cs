@@ -8,9 +8,9 @@ namespace MossiApi
     {
         #region Variables
         private static readonly string SCAN = "scan", ANGLE = "angle";
-        public static readonly int DEAFULT_VERTICAL_ANGLE = 0, DEAFULT_HORIZONTAL_ANGLE = 0,
-            MAX_HORIZONTAL_ANGLE = 0, MIN_HORIZONTAL_ANGLE = -25,
-            MAX_VERTICAL_ANGLE = 10, MIN_VERTICAL_ANGLE = -15;
+        public static  int DEAFULT_VERTICAL_ANGLE = 20, DEAFULT_HORIZONTAL_ANGLE = 0,
+            MAX_HORIZONTAL_ANGLE = 30, MIN_HORIZONTAL_ANGLE = -30,
+            MAX_VERTICAL_ANGLE = 27, MIN_VERTICAL_ANGLE = -27;
 
         private KinectSensor kinect;
         private SafeSerialPort port;
@@ -22,7 +22,7 @@ namespace MossiApi
         #region Proporties
         public int VerticalAngle
         {
-            get { return verticalAngle; }
+            get { return DEAFULT_VERTICAL_ANGLE; }
             private set
             {
                 if (value > kinect.MaxElevationAngle)
@@ -50,11 +50,13 @@ namespace MossiApi
         #endregion
 
         #region Constructor
-        public KinectAngleHandler(KinectSensor kinect, SafeSerialPort port)
+        public KinectAngleHandler(KinectSensor kinect, SafeSerialPort port, int deafultVerticalAngle)
         {
             if (kinect == null)
                 throw new System.ArgumentException("KinectSensor cannot be null", "kinect");
             this.kinect = kinect;
+
+            DEAFULT_VERTICAL_ANGLE = deafultVerticalAngle;
 
             SetSerialPort(port);
             //Set default vertical & horizobtal angles
@@ -131,6 +133,7 @@ namespace MossiApi
         #region Scan
         public void Scan()
         {
+            Log.WriteLine("vertical angle is: " + DEAFULT_VERTICAL_ANGLE.ToString());
             ChangeVerticalAngleTo(DEAFULT_VERTICAL_ANGLE);
             port.WriteLine(SCAN);
         }

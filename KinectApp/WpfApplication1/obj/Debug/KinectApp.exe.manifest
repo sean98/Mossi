@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="KinectApp.exe" version="1.0.0.14" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="KinectApp.exe" version="1.0.0.18" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="Images\logo.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KinectApp.exe" size="93152">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="KinectApp.exe" size="94176">
       <assemblyIdentity name="KinectApp" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>71BeazllyA5ZABp6pU4zzCnkblPZbLJW4zgGkxG3uaQ=</dsig:DigestValue>
+        <dsig:DigestValue>IrQ3CM4Z1vRdGGwbfA8zFtRecqcRW0wLa1Mm8TvEUmE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MossiApi.dll" size="25088">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MossiApi.dll" size="23552">
       <assemblyIdentity name="MossiApi" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>f9GkGA7hxCYjX+vcHofcOxiBoH5JsGTc3XfnLCqz6Bg=</dsig:DigestValue>
+        <dsig:DigestValue>LZ/IQAkkQu6ADfU67BQE0HYJnjXh5uNFNtTRrZbgxVk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -99,13 +99,13 @@
       <dsig:DigestValue>MvglpVKk7NSWfOAhtiI1ghVDSLHhzTSAgFEeoD5n58I=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="KinectApp.exe.config" size="2124">
+  <file name="KinectApp.exe.config" size="2126">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>4bG2e5EvXlB39aHh5lmVaaRVs7LGDF4lMWpTU2kPKcM=</dsig:DigestValue>
+      <dsig:DigestValue>bHVytjSv7b+L3kInUeAUGlFzMYz68SuS83O1XoS30GY=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

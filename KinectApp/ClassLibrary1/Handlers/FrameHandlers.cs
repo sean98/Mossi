@@ -9,27 +9,17 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using MossiApi.Handlers;
 
 namespace MossiApi
 {
     public class KinectFrameHandler : Model.IKinectFrameHandler
     {
-        #region Variable
         Model model;
-        #endregion
 
-        #region Properties
-        public event PropertyChangedEventHandler SituationPropertyChanged, HeightPropertyChanged;
+        #region events
+        public event PropertyChangedEventHandler PositionPropertyChanged, HeightPropertyChanged;
         public event EventHandler PixelDataReady;
-
-        private bool propertyUpdated = false, sitting = false, lying = false, handsInTheAir = false,
-            legsInTheAir = false, notMoves = false, frameRealiable = false;
-        private double headHeight = 0, legHeight = 0, handsHeight=0;
-        private int trackedPeople = -1;
-
-        public double SkeletonFPS { get; set; }
-        public double DepthFPS { get; set; }
-        public bool GenaratePixelData { get; set; } = false;
 
         public void OnHeightPropertyChanged([CallerMemberName] string name = null)
         {
@@ -41,9 +31,9 @@ namespace MossiApi
             //HeightPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public void OnSituationPropertyChanged([CallerMemberName] string name = null)
+        public void OnPositionPropertyChanged([CallerMemberName] string name = null)
         {
-            PropertyChangedEventHandler handler = SituationPropertyChanged;
+            PropertyChangedEventHandler handler = PositionPropertyChanged;
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(name));
@@ -56,10 +46,18 @@ namespace MossiApi
             EventHandler handler = PixelDataReady;
             if (handler != null)
             {
-                handler(this, new PixelDataEventArgs((int[]) pixelData.Clone(), width, height));
+                handler(this, new PixelDataEventArgs((int[])pixelData.Clone(), width, height));
             }
         }
+        #endregion
 
+        #region Properties
+        public double SkeletonFPS { get => _skeletonFPS; set => _skeletonFPS = value; }
+        public double DepthFPS { get; set; }
+        public bool GenaratePixelData { get; set; } = false;
+
+
+        private int trackedPeople = -1;
         public int TrackedPeople
         {
             get { return trackedPeople; }
@@ -68,89 +66,87 @@ namespace MossiApi
                 if (value != trackedPeople)
                 {
                     trackedPeople = value;
-                    propertyUpdated = true;
+                    OnPositionPropertyChanged();
                 }
                 if (trackedPeople == 0)
-                    model.scan();
+                  model.scan();
+                  
             }
         }
 
-        public bool Sitting
-        {
-            get { return sitting; }
-            set
-            {
-                if (value != sitting)
-                {
-                    sitting = value;
-                    propertyUpdated = true;
-                    Debug.WriteLine("Sitting");
-                }
-            }
-        }
-
+        private Position lying = new Position("Lying", 2000);
         public bool Lying
         {
-            get { return lying; }
+            get { return lying.Active; }
             set
             {
-                if (lying != value)
-                {
-                    lying = value;
-                    propertyUpdated = true;
-                    Debug.WriteLine("Lying");
-                }
+                if (value)
+                    lying.Start();
+                else
+                    lying.Stop();
             }
         }
 
+        private Position sitting = new Position("Sitting", 2000);
+        public bool Sitting
+        {
+            get { return sitting.Active; }
+            set
+            {
+                if (value)
+                    sitting.Start();
+                else
+                    sitting.Stop();
+            }
+        }
+
+
+        private Position notMoves = new Position("NotMoves", 8000);
         public bool NotMoves
         {
-            get { return notMoves; }
+            get { return notMoves.Active; }
             set
             {
-                if (value != notMoves)
-                {
-                    notMoves = value;
-                    propertyUpdated = true;
-                    Debug.WriteLine("NotMoves");
-                }
+                if (value)
+                    notMoves.Start();
+                else
+                    notMoves.Stop();
             }
         }
 
+        private Position handInTheAir = new Position("HandInTheAir", 3500);
         public bool HandsInTheAir
         {
-            get { return handsInTheAir; }
+            get { return handInTheAir.Active; }
             set
             {
-                if (value != handsInTheAir)
-                {
-                    handsInTheAir = value;
-                    propertyUpdated = true;
-                    Debug.WriteLine("HandsInTheAir");
-                }
+                if (value)
+                    handInTheAir.Start();
+                else
+                    handInTheAir.Stop();
             }
         }
 
+        private Position legsInTheAir = new Position("LegsInTheAir", 3500);
         public bool LegsInTheAir
         {
-            get { return legsInTheAir; }
+            get { return legsInTheAir.Active; }
             set
             {
-                if (value != legsInTheAir)
-                {
-                    legsInTheAir = value;
-                    propertyUpdated = true;
-                    Debug.WriteLine("LegsInTheAir");
-                }
+                if (value)
+                    legsInTheAir.Start();
+                else
+                    legsInTheAir.Stop();
             }
         }
 
+        private double headHeight = 0;
         public double HeadHeight
         {
             get { return headHeight; }
             set
             {
-                if (value!=headHeight)
+                if (value != headHeight)
                 {
                     headHeight = value;
                     OnHeightPropertyChanged();
@@ -160,7 +156,7 @@ namespace MossiApi
                         Lying = false;
                         Sitting = false;
                     }
-                    else if (headHeight > 0.5)
+                    else if (headHeight > 0.7)
                     {
                         Lying = false;
                         Sitting = true;
@@ -174,6 +170,7 @@ namespace MossiApi
             }
         }
 
+        private double legHeight = 0;
         public double LegHeight
         {
             get { return legHeight; }
@@ -192,12 +189,13 @@ namespace MossiApi
             }
         }
 
+        private double handsHeight = 0;
         public double HandsHeight
         {
             get { return handsHeight; }
             set
             {
-                if (handsHeight!=value)
+                if (handsHeight != value)
                 {
                     handsHeight = value;
                     OnHeightPropertyChanged();
@@ -210,25 +208,25 @@ namespace MossiApi
             }
         }
 
+        private bool frameRealiable = false;
         public bool FrameRealiable
         {
             get { return frameRealiable; }
             set
             {
-                if (frameRealiable!=value)
+                if (frameRealiable != value)
                 {
                     frameRealiable = value;
-                    OnSituationPropertyChanged();
+                    OnPositionPropertyChanged();
                 }
             }
         }
-
         #endregion
 
         #region skeleton_Variable
         private readonly double OPTIMAL_LOCATION = 0.5, RANGE = 0.1;
-        private static readonly int skletonArrayListMaxSize = 4;
-        private IList<Skeleton> skeletonHistory = new CircularArrayList<Skeleton>(skletonArrayListMaxSize);
+        private Skeleton oldSkeleton, curSkeleton;
+//        private IList<Skeleton> skeletonHistory = new CircularArrayList<Skeleton>(skletonArrayListMaxSize);
         private SkeletonFrame skeletonFrame;
         private Skeleton[] skeleton;
         private int skeletonFrameCounter;
@@ -240,6 +238,7 @@ namespace MossiApi
         private DepthImagePixel[] depthData;
         private int[] pixelData;
         private int depthFrameCounter = 0;
+        private double _skeletonFPS;
         #endregion
 
         #region Constructor
@@ -250,17 +249,28 @@ namespace MossiApi
             SkeletonFPS = 1;
             DepthFPS = 30;
 
-            maxDepth = 8000;// model.getSensor().DepthStream.TooFarDepth - 1;
+            maxDepth = model.getSensor().DepthStream.TooFarDepth - 1;
             minDepth = model.getSensor().DepthStream.TooNearDepth + 1;
 
             disDepth = (maxDepth - minDepth) / 3;
             firstDepth = minDepth + disDepth;
             secondDepth = firstDepth + disDepth;
+
+            lying.PositionPropertyChanged += Position_Changed;
+            sitting.PositionPropertyChanged += Position_Changed;
+            notMoves.PositionPropertyChanged += Position_Changed;
+            handInTheAir.PositionPropertyChanged += Position_Changed;
+            legsInTheAir.PositionPropertyChanged += Position_Changed;
+        }
+
+        private void Position_Changed(object sender, PropertyChangedEventArgs e)
+        {
+            OnPositionPropertyChanged(e.PropertyName);
         }
         #endregion
 
         #region Frame_Methods
-        
+
         public void SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             try
@@ -268,14 +278,14 @@ namespace MossiApi
                 skeletonFrame = e.OpenSkeletonFrame();
                 if (skeletonFrame == null)
                     return;
-                if ((skeletonFrameCounter = ++skeletonFrameCounter % (int)(30/SkeletonFPS)) != 0)//use one frame from 30
+                if ((skeletonFrameCounter = ++skeletonFrameCounter % (int)(30 / SkeletonFPS)) != 0)//use one frame from 30
                 {
                     skeletonFrame.Dispose();
                     return;
                 }
                 skeleton = new Skeleton[skeletonFrame.SkeletonArrayLength];
                 skeletonFrame.CopySkeletonDataTo(skeleton);
-                
+
                 int tempTrackedPeople = 0;
                 foreach (Skeleton s in skeleton)
                 {
@@ -287,7 +297,7 @@ namespace MossiApi
                     //if s is not fully tracked exit for loop
                     if (s.TrackingState != SkeletonTrackingState.Tracked)
                         continue;
-                   
+
                     //checking height
                     HeadHeight = GetHeight(s.Joints[JointType.Head]);
 
@@ -297,12 +307,14 @@ namespace MossiApi
                     //checking if hands above head
                     HandsHeight = Math.Min(GetHeight(s.Joints[JointType.HandRight]), GetHeight(s.Joints[JointType.HandLeft]));
 
-                    skeletonHistory.Add(CloneSkeleton(s));
-                    NotMoves = (skletonArrayListMaxSize==skeletonHistory.Count) && 
-                        (SkeletonDistance(skeletonHistory) < 0.1 ? true : false);
+                    //check if moves
+                    oldSkeleton = curSkeleton;
+                    curSkeleton = CloneSkeleton(s);
+                    if (oldSkeleton != null)
+                        NotMoves = SkeletonDistance(oldSkeleton, curSkeleton) < 0.1 ? true : false;
 
                     //check angles only for the first person
-                    if (tempTrackedPeople > 1)
+                    if (tempTrackedPeople > 0.01)
                         continue;
 
                     //change vertical angle if person is not in range
@@ -335,15 +347,10 @@ namespace MossiApi
                         }
                     }
                 }//End of for
-                
+
                 TrackedPeople = tempTrackedPeople;
-                
-                if (propertyUpdated)
-                {
-                    propertyUpdated = false;
-                    OnSituationPropertyChanged();
-                }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Log.WriteLine(ex.Message);
             }
@@ -356,8 +363,6 @@ namespace MossiApi
 
         public void DepthFrameReady(object sender, DepthImageFrameReadyEventArgs e)
         {
-            //if ((depthFrameCounter = ++depthFrameCounter % 30) != 0)//use one frame from 30
-            //    return;
             try
             {
                 depthFrame = e.OpenDepthImageFrame();
@@ -379,7 +384,7 @@ namespace MossiApi
                     depthFrame.CopyDepthImagePixelDataTo(depthData);
 
                     int badPixels = 0;
-                    for( int i=0; i<depthData.Length; i++)
+                    for (int i = 0; i < depthData.Length; i++)
                     {
                         if (depthData[i].Depth < minDepth || depthData[i].Depth > maxDepth)
                             ++badPixels;
@@ -392,7 +397,7 @@ namespace MossiApi
 
                     if (GenaratePixelData)
                     {
-                        for(int i=0; i < depthData.Length; i++)
+                        for (int i = 0; i < depthData.Length; i++)
                         {
 
                             short tempDepth = depthData[i].Depth;
@@ -449,7 +454,6 @@ namespace MossiApi
 
         private Skeleton CloneSkeleton(Skeleton origin)
         {
-            // isso serializa o skeleton para a memoria e recupera novamente, fazendo uma cópia do objeto
             MemoryStream ms = new MemoryStream();
             BinaryFormatter bf = new BinaryFormatter();
 
@@ -462,15 +466,12 @@ namespace MossiApi
             return obj as Skeleton;
         }
 
-        private double SkeletonDistance(IList<Skeleton> skeletons)
+        private double SkeletonDistance(Skeleton s1, Skeleton s2)
         {
             double dist = 0;
-            for (int i=1;i<skeletons.Count;i++)
-            {
-                dist += Math.Sqrt(Math.Pow(skeletons[i].Position.X - skeletons[i - 1].Position.X, 2)
-                                + Math.Pow(skeletons[i].Position.Y - skeletons[i - 1].Position.Y, 2)
-                                + Math.Pow(skeletons[i].Position.Z - skeletons[i - 1].Position.Z, 2));
-            }
+            dist += Math.Sqrt(Math.Pow(s1.Position.X - s2.Position.X, 2)
+                            + Math.Pow(s1.Position.Y - s2.Position.Y, 2)
+                            + Math.Pow(s1.Position.Z - s2.Position.Z, 2));
             return dist;
         }
         #endregion

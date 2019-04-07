@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>yNDGwJuc97beCGtBlBsO5G39xEA5cyLaJ+odrxltvp0=</dsig:DigestValue>
+        <dsig:DigestValue>PXDdFmBIbw3pDugRiHzevIM8G/i0BxpQvwRiaJd1LkI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MossiApi.dll" size="22528">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MossiApi.dll" size="20992">
       <assemblyIdentity name="MossiApi" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>BNCGjBjpxj7hqa9Do2Uy0YnDzd0YEXfX3OJ7w9pamy4=</dsig:DigestValue>
+        <dsig:DigestValue>urmrd6gGQ3PDkKyCgHEmK6aN9cQco+aZdG9yyOe4Qjs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

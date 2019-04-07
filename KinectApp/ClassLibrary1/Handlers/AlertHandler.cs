@@ -13,7 +13,7 @@ namespace MossiApi
         public AlertHandler(string ip, int port)
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            serverIP = IPAddress.Parse("127.0.0.1");        //ip);
+            serverIP = IPAddress.Parse(ip);
             Log.WriteLine("\n\n\n" + serverIP.ToString() + "\n\n\n");
             endPoint = new IPEndPoint(serverIP, port);
         }

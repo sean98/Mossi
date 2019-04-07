@@ -6,3 +6,4 @@ C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrar
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\MossiApi.csproj.CopyComplete
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\MossiApi.dll
 C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\MossiApi.pdb
+C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\MossiApi.csprojAssemblyReference.cache
