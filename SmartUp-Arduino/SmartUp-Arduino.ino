@@ -48,29 +48,27 @@ void setup() {
 
 void loop() {
 	//Serial.print("Hello");
-  //DOOR_Interrupt();
 	String msg = readLine();
 
-	/*if (isNumeric(msg));
-		//moveMotorTo(msg.toInt());
+	if (isNumeric(msg));
+		moveMotorTo(msg.toInt());
 	
 	else */if (msg.equals(INIT))  //connect to program from PC
 		Serial.print((String)INIT + "\n");
-	/*
+	
 	else if (msg.equals(SCAN))
 		scan();
 	else if (msg.equals(ANGLE))
 		Serial.print((String)curAngle + "\n");
-	*/
-	/*
+	
 	else if (DhtTimeElapsed < DHT_DELAY)  //no valid message, read DHT with delay
 	{
 		int tmp = min(DHT_DELAY - DhtTimeElapsed, 500);
 		delay(tmp);
 		DhtTimeElapsed += tmp;
 	}
-	*/
-	/*
+	
+	
 	if (DhtTimeElapsed >= DHT_DELAY) //can measure DHT without delay
 	{
 		DhtTimeElapsed = 0;
@@ -84,7 +82,7 @@ void loop() {
 		else
 			digitalWrite(RELAY_PIN, LOW);
 	}
-	*/
+	
 }
 
 void DOOR_Interrupt() {
