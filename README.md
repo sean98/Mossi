@@ -1,2 +1,0 @@
-# SmartUp-KinectApp
-pc code

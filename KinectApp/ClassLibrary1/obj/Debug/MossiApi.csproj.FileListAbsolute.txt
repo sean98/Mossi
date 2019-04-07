@@ -1,9 +1,0 @@
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\bin\Debug\MossiApi.dll
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\bin\Debug\MossiApi.pdb
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\bin\Debug\Microsoft.Kinect.dll
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\bin\Debug\Microsoft.Kinect.xml
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\MossiApi.csproj.CoreCompileInputs.cache
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\MossiApi.csproj.CopyComplete
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\MossiApi.dll
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\MossiApi.pdb
-C:\Users\sean9\Documents\GitHub Projects\SmartUp-KinectApp\KinectApp\ClassLibrary1\obj\Debug\MossiApi.csprojAssemblyReference.cache
